@@ -30,15 +30,27 @@ const Filters = ({poolCount}) => {
         <Form.Group>
           <Form.Label>Coins to Ride</Form.Label>
           <Form.Control name='desiredCoins' value={desiredCoins} defaultValue={desiredCoins} size="sm" type="text" placeholder="e.g. usdc dai busd" onChange={handleChange} />
-          <Form.Check name='strictFilter' checked={strictFilter} defaultChecked={strictFilter} type="checkbox" label="Show ONLY these coins (USDC won't show USDC-DAI)" onChange={handleCheckBoxChange} />
-          <Form.Check name='exactMatch' checked={exactMatch} defaultChecked={exactMatch} type="checkbox" label="Exact Match (USDC won't match ibUSDC)" onChange={handleCheckBoxChange} />
+          <Form.Check>
+            <Form.Check.Input id='strictFilter' name='strictFilter' checked={strictFilter} defaultChecked={strictFilter} type="checkbox" onChange={handleCheckBoxChange} />
+            <Form.Check.Label for='strictFilter'>Show ONLY these coins (USDC won't show USDC-DAI)</Form.Check.Label>
+          </Form.Check>
+          <Form.Check>
+            <Form.Check.Input id='exactMatch' name='exactMatch' checked={exactMatch} defaultChecked={exactMatch} type="checkbox" onChange={handleCheckBoxChange} />
+            <Form.Check.Label for='exactMatch'>Exact Match (USDC won't match ibUSDC)</Form.Check.Label>
+          </Form.Check>
         </Form.Group>
 
         <hr/>
 
         <Form.Group>
-          <Form.Check name='includeLPs' checked={includeLPs} defaultChecked={includeLPs} type="checkbox" label="Include Liquidity Pools" onChange={handleCheckBoxChange} />
-          <Form.Check name='includeSingleAssets' checked={includeSingleAssets} defaultChecked={includeSingleAssets} type="checkbox" label="Include Single Assets" onChange={handleCheckBoxChange}  />
+          <Form.Check>
+            <Form.Check.Input id='includeLPs' name='includeLPs' checked={includeLPs} defaultChecked={includeLPs} type="checkbox" onChange={handleCheckBoxChange} />
+            <Form.Check.Label for='includeLPs'>Include Liquidity Pools</Form.Check.Label>
+          </Form.Check>
+          <Form.Check>
+            <Form.Check.Input id='includeSingleAssets' name='includeSingleAssets' checked={includeSingleAssets} defaultChecked={includeSingleAssets} type="checkbox" onChange={handleCheckBoxChange} />
+            <Form.Check.Label for='includeSingleAssets'>Include Single Assets</Form.Check.Label>
+          </Form.Check>
         </Form.Group>
 
         <hr/>
