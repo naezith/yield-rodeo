@@ -40,7 +40,7 @@ export const getYieldsWithPrices = async () => {
       lpPrice: lpPrice,
       tvl: tvlToken
     }
-  })
+  }).filter(pool => pool.tvl > 0)
 }
 
 export const coinLogoUrl = ticker => 'https://trustwallet-assets-api.vercel.app/api/symbol/' + ticker

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './bootswatch-darkly-bootstrap.css';
-import "bootstrap/js/src/collapse.js";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
