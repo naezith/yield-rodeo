@@ -16,6 +16,11 @@ export const formatPercentage = (num) => {
   const text = numeral(num).format('0.00a%')
   return text.indexOf('NaN') !== -1 ? '🔥' : text
 }
+
 export const formatInteger = (num) => {
   return numeral(num).format('0,0')
+}
+
+export const formatFiat = (num) => {
+  return numeral(num).format('$0,0.0a')
 }

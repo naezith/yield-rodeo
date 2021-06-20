@@ -11,9 +11,9 @@ import Table from 'react-bootstrap/Table'
 
 import './App.css'
 import {loadWeb3, connectWallet } from './utility/web3_utils'
-import {Col, Image, OverlayTrigger, Popover, Form} from 'react-bootstrap'
-import {coinLogoUrl, getYields} from './utility/api'
-import {calcDaily, formatInteger, formatPercentage, getPoolName} from './utility/utils'
+import {Col, Image, OverlayTrigger, Popover, Form, ButtonGroup} from 'react-bootstrap'
+import {coinLogoUrl, getYields, getYieldsWithPrices} from './utility/api'
+import {calcDaily, formatFiat, formatInteger, formatPercentage, getPoolName} from './utility/utils'
 import {textHasAnyOfArray} from './utility/helpers'
 
 // const ApyTooltip = ({pool}) =>
@@ -21,17 +21,30 @@ import {textHasAnyOfArray} from './utility/helpers'
 //     Hello!
 //   </Tooltip>
 
+const emptyFilters = {
+  desiredCoins: '',
+  strictFilter: true,
+  exactMatch: false,
+  desiredPlatforms: '',
+  includeSingleAssets: true,
+  includeLPs: true
+}
+
+const defaultFilters = {
+  ...emptyFilters,
+  desiredCoins: 'usdc dai busd',
+  desiredPlatforms: 'cake auto aave sushi quick venus 1inch ellipsis mdex'
+}
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [myAddress, setMyAddress] = useState('')
   const [yields, setYields] = useState([])
-  const [filters, setFilters] = useState({
-    desiredCoins: 'usdc dai busd',
-    desiredPlatforms: 'cake auto aave sushi quick venus 1inch ellipsis mdex',
-    strictFilter: true,
-    includeSingleAssets: true,
-    includeLPs: true
-  })
+  const [filters, setFilters] = useState(defaultFilters)
+
+  const resetFilters = () => {
+    setFilters(defaultFilters)
+  }
 
   const handleChange = event => {
     const { value, name } = event.target
@@ -49,7 +62,7 @@ const App = () => {
       console.log('Fetching information')
 
       // Get yields
-      const _yields = await getYields()
+      const _yields = await getYieldsWithPrices()
       setYields(_yields)
   }
 
@@ -72,7 +85,7 @@ const App = () => {
     fetchData()
   }, [])
 
-  const { desiredCoins, desiredPlatforms, strictFilter, includeSingleAssets, includeLPs } = filters
+  const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, includeSingleAssets, includeLPs } = filters
   const desiredPlatformsArray = desiredPlatforms.trim().toUpperCase().split(' ')
 
   const filteredYields = yields.filter(pool => {
@@ -87,15 +100,15 @@ const App = () => {
     if(desiredCoinsArray.length > 0) {
       // Single asset
       if(!pool.coinB) {
-        if(!textHasAnyOfArray(coinA, desiredCoinsArray)) return false
+        if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch)) return false
       }
       // Liquidity Pool
       else {
         if(strictFilter) {
-          if(!textHasAnyOfArray(coinA, desiredCoinsArray) || !textHasAnyOfArray(coinB, desiredCoinsArray)) return false
+          if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch) || !textHasAnyOfArray(coinB, desiredCoinsArray, exactMatch)) return false
         }
         else {
-          if(!textHasAnyOfArray(coinA, desiredCoinsArray) && !textHasAnyOfArray(coinB, desiredCoinsArray)) return false
+          if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch) && !textHasAnyOfArray(coinB, desiredCoinsArray, exactMatch)) return false
         }
       }
     }
@@ -135,17 +148,25 @@ const App = () => {
       <Jumbotron className='filters'>
         <Form.Group>
           <Form.Label>Desired Coins</Form.Label>
-          <Form.Control name='desiredCoins' defaultValue={desiredCoins} size="sm" type="text" placeholder="eg. USDC DAI BUSD" onChange={handleChange}/>
-          <Form.Check name='strictFilter' defaultChecked={strictFilter} type="checkbox" label="Show ONLY these coins (USDC won't show USDC-DAI)" onChange={handleCheckBoxChange} />
+          <Form.Control name='desiredCoins' value={desiredCoins} defaultValue={desiredCoins} size="sm" type="text" placeholder="eg. USDC DAI BUSD" onChange={handleChange} />
+          <Form.Check name='strictFilter' checked={strictFilter} defaultChecked={strictFilter} type="checkbox" label="Show ONLY these coins (USDC won't show USDC-DAI)" onChange={handleCheckBoxChange} />
+          <Form.Check name='exactMatch' checked={exactMatch} defaultChecked={exactMatch} type="checkbox" label="Exact Match (USDC won't match ibUSDC)" onChange={handleCheckBoxChange} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Desired Platforms</Form.Label>
-          <Form.Control name='desiredPlatforms' defaultValue={desiredPlatforms} size="sm" type="text" placeholder="eg. cake aave sushi" onChange={handleChange}/>
+          <Form.Control name='desiredPlatforms' value={desiredPlatforms} defaultValue={desiredPlatforms} size="sm" type="text" placeholder="eg. cake aave sushi" onChange={handleChange}/>
         </Form.Group>
         <Form.Group>
-          <Form.Check name='includeLPs' defaultChecked={includeLPs} type="checkbox" label="Include Liquidity Pools" onChange={handleCheckBoxChange} />
-          <Form.Check name='includeSingleAssets' defaultChecked={includeSingleAssets} type="checkbox" label="Include Single Assets" onChange={handleCheckBoxChange}  />
+          <Form.Check name='includeLPs' checked={includeLPs} defaultChecked={includeLPs} type="checkbox" label="Include Liquidity Pools" onChange={handleCheckBoxChange} />
+          <Form.Check name='includeSingleAssets' checked={includeSingleAssets} defaultChecked={includeSingleAssets} type="checkbox" label="Include Single Assets" onChange={handleCheckBoxChange}  />
         </Form.Group>
+
+        <hr/>
+        <Form.Label>{filteredYields.length === 0 ? 'No pools found, please check your filters' : `Found ${filteredYields.length} pool${filteredYields.length === 1 ? '' : 's'} on Beefy Finance.`}</Form.Label>
+        <ButtonGroup className='reset-filters-btn' aria-label="Basic example">
+          <Button size='sm' variant='info' onClick={() => { setFilters(emptyFilters)}}>Clear Filters</Button>
+          <Button size='sm' variant='success' onClick={() => { setFilters(defaultFilters)}}>Default Filters</Button>
+        </ButtonGroup>
       </Jumbotron>
 
       {
@@ -158,6 +179,7 @@ const App = () => {
               <th>APY</th>
               <th>Daily</th>
               <th>Trading Fees Included</th>
+              <th>TVL</th>
             </tr>
             </thead>
             <tbody>
@@ -226,6 +248,7 @@ const App = () => {
                   >
                   <Button variant="success">Yes</Button>
                   </OverlayTrigger> : !pool.coinB ? '-' : "Unknown"}</td>
+                <td>{formatFiat(pool.tvl)}</td>
               </tr>
             )}
             </tbody>
