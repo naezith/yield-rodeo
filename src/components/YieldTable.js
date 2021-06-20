@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import './YieldTable.scss'
 
 import BootstrapTable from 'react-bootstrap-table-next'
@@ -10,7 +10,9 @@ import Table from 'react-bootstrap/Table'
 
 import {Col, Image, OverlayTrigger, Popover} from 'react-bootstrap'
 import {coinLogoUrl} from '../utility/api'
-import {calcDaily, formatFiat, formatInteger, formatPercentage, getPoolName} from '../utility/utils'
+import {calcDaily, filterPools, formatFiat, formatInteger, formatPercentage, getPoolName} from '../utility/utils'
+
+import FiltersContext from '../contexts/filters.context'
 
 const poolFormatter = pool =>
   <Container className='pool-name'>
@@ -75,7 +77,7 @@ pool.tradingApr ?
       </Popover>
     }
   >
-    <Button variant="success">Yes</Button>
+    <Button variant="success">Included</Button>
   </OverlayTrigger> : !pool.coinB ? '-' : "Unknown"
 
 const tvlFormatter = tvl => formatFiat(tvl)
@@ -105,7 +107,7 @@ const columns = [
   },
   {
     dataField: "self",
-    text: "Trading Fees Included",
+    text: "Trading Fees",
     formatter: tradingFeesFormatter
   },
   {
@@ -117,7 +119,12 @@ const columns = [
 ]
 
 const YieldTable = ({yields}) => {
-  yields = yields.map(pool => ({ ...pool, self: pool }))
+  const { filters } = useContext(FiltersContext)
+
+  console.log(filters)
+
+  yields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
+
   return <BootstrapTable
             keyField="key"
             data={yields}

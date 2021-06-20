@@ -9,31 +9,3 @@ html, body, #root {
 .App {
   text-align: center;
 }
-
-.header {
-  margin-bottom: 1em;
-}
-
-.image-card {
-  margin-bottom: 0.1em;
-  padding: 0.1em;
-}
-
-.image-info {
-  padding: 2em;
-  text-align: left;
-}
-
-.pool-name img {
-  width: 2em;
-}
-
-.filters {
-  text-align: left;
-  padding-top: 1em;
-  padding-bottom: 1em;
-}
-
-.reset-filters-btn {
-  margin-left: 1.5em;
-}
