@@ -16,11 +16,6 @@ import {coinLogoUrl, getYields, getYieldsWithPrices} from './utility/api'
 import {calcDaily, formatFiat, formatInteger, formatPercentage, getPoolName} from './utility/utils'
 import {textHasAnyOfArray} from './utility/helpers'
 
-// const ApyTooltip = ({pool}) =>
-//   <Tooltip id={pool.key + '-tooltip'}>
-//     Hello!
-//   </Tooltip>
-
 const emptyFilters = {
   desiredCoins: '',
   strictFilter: true,
@@ -163,7 +158,7 @@ const App = () => {
 
         <hr/>
         <Form.Label>{filteredYields.length === 0 ? 'No pools found, please check your filters' : `Found ${filteredYields.length} pool${filteredYields.length === 1 ? '' : 's'} on Beefy Finance.`}</Form.Label>
-        <ButtonGroup className='reset-filters-btn' aria-label="Basic example">
+        <ButtonGroup className='reset-filters-btn'>
           <Button size='sm' variant='info' onClick={() => { setFilters(emptyFilters)}}>Clear Filters</Button>
           <Button size='sm' variant='success' onClick={() => { setFilters(defaultFilters)}}>Default Filters</Button>
         </ButtonGroup>
