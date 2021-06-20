@@ -15,11 +15,20 @@ html, body, #root {
 }
 
 .image-card {
-  margin-bottom: 2em;
-  padding: 2em;
+  margin-bottom: 0.1em;
+  padding: 0.1em;
 }
 
 .image-info {
   padding: 2em;
   text-align: left;
+}
+
+.pool-name img {
+  width: 2em;
+}
+
+.filters {
+  text-align: left;
+  padding-top: 2em;
 }

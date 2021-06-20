@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './bootswatch-darkly-bootstrap.css';
+import "bootstrap/js/src/collapse.js";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
