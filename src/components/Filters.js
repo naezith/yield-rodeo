@@ -28,7 +28,7 @@ const Filters = ({poolCount}) => {
   return (
       <Jumbotron className='filters'>
         <Form.Group>
-          <Form.Label>Coins to Ride</Form.Label>
+          <Form.Label>💎 Coins to Ride</Form.Label>
           <Form.Control name='desiredCoins' value={desiredCoins} defaultValue={desiredCoins} size="sm" type="text" placeholder="e.g. usdc dai busd" onChange={handleChange} />
           <Form.Check>
             <Form.Check.Input id='strictFilter' name='strictFilter' checked={strictFilter} defaultChecked={strictFilter} type="checkbox" onChange={handleCheckBoxChange} />
@@ -56,13 +56,13 @@ const Filters = ({poolCount}) => {
         <hr/>
 
         <Form.Group>
-          <Form.Label>Platforms to Ride</Form.Label>
+          <Form.Label>🏰 Platforms to Ride</Form.Label>
           <Form.Control name='desiredPlatforms' value={desiredPlatforms} defaultValue={desiredPlatforms} size="sm" type="text" placeholder="e.g. cake aave sushi" onChange={handleChange}/>
         </Form.Group>
 
         <hr/>
 
-        <span>{poolCount === 0 ? 'No pools found, please check your filters' : `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on Beefy Finance.`}</span>
+        <span>{poolCount === 0 ? 'No pools found, please check your filters' : `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on 🐮 Beefy Finance.`}</span>
         <ButtonGroup className='reset-filters-btn'>
           <Button size='sm' variant='info' onClick={() => { setFilters(emptyFilters)}}>Clear Filters</Button>
           <Button size='sm' variant='success' onClick={() => { setFilters(defaultFilters)}}>Default Filters</Button>
