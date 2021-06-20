@@ -14,25 +14,25 @@ const TopNavbar = () => {
             src="/hat_short.png"
             className="navbar-image"
           />{'   '}
-          yield.rodeo
+          <span className='navbar-title'>yield . rodeo</span>
         </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <OverlayTrigger
             placement="bottom"
             overlay={<Tooltip>{copied ? 'Copied!' : 'Click to copy!'}</Tooltip>}
           >
-          <CopyToClipboard text={'0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C'}
-          onCopy={() => {
-            setCopied(true)
-            setTimeout(() => { setCopied(false) },1000)
-          }}>
-            <span>❤️ 0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C ❤</span>
-          </CopyToClipboard>
-        </OverlayTrigger>
+            <CopyToClipboard text={'0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C'}
+            onCopy={() => {
+              setCopied(true)
+              setTimeout(() => { setCopied(false) },1000)
+            }}>
+              <span>❤️ 0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C ❤️</span>
+            </CopyToClipboard>
+          </OverlayTrigger>
         </Nav>
-      </Navbar.Collapse>
+      <Nav>
+        <Nav.Link className='navbar-contact' href={'https://naezith.com/?id=contact'} target="_blank">Contact</Nav.Link>
+      </Nav>
     </Navbar>
   )
 }

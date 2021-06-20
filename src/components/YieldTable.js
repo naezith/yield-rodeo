@@ -17,13 +17,13 @@ import FiltersContext from '../contexts/filters.context'
 const poolFormatter = pool =>
   <Container className='pool-name'>
     <Row>
-      <Col>
+      <Col className='logo-col'>
         <Image src={coinLogoUrl(pool.coinA)} roundedCircle/>
       </Col>
       <Col>
         {getPoolName(pool)}
       </Col>
-      <Col>
+      <Col className='logo-col'>
         <Image src={coinLogoUrl(pool.coinB || pool.coinA)} roundedCircle/>
       </Col>
     </Row>

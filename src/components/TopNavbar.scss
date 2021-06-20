@@ -1,10 +1,27 @@
+.navbar {
+  border-radius: .3rem;
+}
+
 .navbar-image {
   display: inline-block;
   vertical-align: middle;
   height: 2em;
   margin-left: 1em;
-  margin-right: 0.75em;
+  margin-right: 1em;
 }
+
+.navbar-brand span {
+  font-size: 1.2em;
+}
+
 .navbar-image {
-  -webkit-filter: drop-shadow(0px 0px 7px rgba(255,255,200,0.8));
+  filter: drop-shadow(0px 0px 10px rgba(255,255,255,0.8));
+}
+
+.navbar-contact {
+  margin-left: 1em;
+}
+
+.navbar-title {
+  word-spacing: -0.1em;
 }
