@@ -14,7 +14,7 @@ const TopNavbar = () => {
             src="/hat_short.png"
             className="navbar-image"
           />{'   '}
-          <span className='navbar-title'>yield . rodeo</span>
+          <span className='navbar-title'>yield.rodeo</span>
         </Navbar.Brand>
         <Nav className="ml-auto">
           <OverlayTrigger

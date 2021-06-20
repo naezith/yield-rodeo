@@ -32,11 +32,11 @@ const Filters = ({poolCount}) => {
           <Form.Control name='desiredCoins' value={desiredCoins} defaultValue={desiredCoins} size="sm" type="text" placeholder="e.g. usdc dai busd" onChange={handleChange} />
           <Form.Check>
             <Form.Check.Input id='strictFilter' name='strictFilter' checked={strictFilter} defaultChecked={strictFilter} type="checkbox" onChange={handleCheckBoxChange} />
-            <Form.Check.Label for='strictFilter'>Show ONLY these coins (USDC won't show USDC-DAI)</Form.Check.Label>
+            <Form.Check.Label for='strictFilter'>Show ONLY these coins <span className='silent'>(USDC won't show USDC-DAI)</span></Form.Check.Label>
           </Form.Check>
           <Form.Check>
             <Form.Check.Input id='exactMatch' name='exactMatch' checked={exactMatch} defaultChecked={exactMatch} type="checkbox" onChange={handleCheckBoxChange} />
-            <Form.Check.Label for='exactMatch'>Exact Match (USDC won't match ibUSDC)</Form.Check.Label>
+            <Form.Check.Label for='exactMatch'>Exact Match <span className='silent'>(USDC won't match ibUSDC)</span></Form.Check.Label>
           </Form.Check>
         </Form.Group>
 

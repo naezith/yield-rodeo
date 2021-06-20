@@ -10,3 +10,8 @@ html, body, #root {
 .App {
   text-align: center;
 }
+
+.silent {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
