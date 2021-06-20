@@ -8,7 +8,7 @@ const TopNavbar = () => {
   const [copied, setCopied] = useState(false)
   return (
     <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="">
           <img
             alt=""
             src="/hat_short.png"
