@@ -30,5 +30,6 @@ html, body, #root {
 
 .filters {
   text-align: left;
-  padding-top: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }

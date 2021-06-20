@@ -14,6 +14,7 @@ import {loadWeb3, connectWallet } from './utility/web3_utils'
 import {Col, Image, OverlayTrigger, Popover, Form} from 'react-bootstrap'
 import {coinLogoUrl, getYields} from './utility/api'
 import {calcDaily, formatInteger, formatPercentage, getPoolName} from './utility/utils'
+import {textHasAnyOfArray} from './utility/helpers'
 
 // const ApyTooltip = ({pool}) =>
 //   <Tooltip id={pool.key + '-tooltip'}>
@@ -26,6 +27,7 @@ const App = () => {
   const [yields, setYields] = useState([])
   const [filters, setFilters] = useState({
     desiredCoins: 'usdc dai busd',
+    desiredPlatforms: 'cake auto aave sushi quick venus 1inch ellipsis mdex',
     strictFilter: true,
     includeSingleAssets: true,
     includeLPs: true
@@ -70,22 +72,39 @@ const App = () => {
     fetchData()
   }, [])
 
-  const { strictFilter, includeSingleAssets, includeLPs } = filters
-  const desiredCoins = filters.desiredCoins.toUpperCase()
+  const { desiredCoins, desiredPlatforms, strictFilter, includeSingleAssets, includeLPs } = filters
+  const desiredPlatformsArray = desiredPlatforms.trim().toUpperCase().split(' ')
 
   const filteredYields = yields.filter(pool => {
-    return  (includeLPs || !pool.coinB) &&
-            (includeSingleAssets || pool.coinB) &&
-            (desiredCoins === '' || (
-              (
-                strictFilter &&
-                ((desiredCoins.indexOf(pool.coinA) !== -1 && desiredCoins.indexOf(pool.coinB) !== -1) ||
-                 (desiredCoins.indexOf(pool.coinA) !== -1 && !pool.coinB))
-              ) || (
-                !strictFilter &&
-                (desiredCoins.indexOf(pool.coinA) !== -1 || desiredCoins.indexOf(pool.coinB) !== -1)
-              )
-            ))
+    const coinA = pool.coinA.toLowerCase()
+    const coinB = !pool.coinB ? undefined : pool.coinB.toLowerCase()
+
+    if(!includeLPs && coinB) return false
+    if(!includeSingleAssets && !coinB) return false
+
+    // Filter coins
+    const desiredCoinsArray = desiredCoins.trim().toLowerCase().split(' ')
+    if(desiredCoinsArray.length > 0) {
+      // Single asset
+      if(!pool.coinB) {
+        if(!textHasAnyOfArray(coinA, desiredCoinsArray)) return false
+      }
+      // Liquidity Pool
+      else {
+        if(strictFilter) {
+          if(!textHasAnyOfArray(coinA, desiredCoinsArray) || !textHasAnyOfArray(coinB, desiredCoinsArray)) return false
+        }
+        else {
+          if(!textHasAnyOfArray(coinA, desiredCoinsArray) && !textHasAnyOfArray(coinB, desiredCoinsArray)) return false
+        }
+      }
+    }
+
+    // Filter platforms
+    if(desiredPlatformsArray.length > 0)
+      if(!textHasAnyOfArray(pool.platform.toUpperCase(), desiredPlatformsArray)) return false
+
+    return true
   })
 
   return (
@@ -111,13 +130,21 @@ const App = () => {
             </Button>
           </>
         }
+      </Jumbotron>
 
-        <Form.Group className='filters'>
-          <Form.Label>Filters</Form.Label>
-          <Form.Control name='desiredCoins' defaultValue={desiredCoins} size="sm" type="text" placeholder="Desired coins" onChange={handleChange}/>
+      <Jumbotron className='filters'>
+        <Form.Group>
+          <Form.Label>Desired Coins</Form.Label>
+          <Form.Control name='desiredCoins' defaultValue={desiredCoins} size="sm" type="text" placeholder="eg. USDC DAI BUSD" onChange={handleChange}/>
           <Form.Check name='strictFilter' defaultChecked={strictFilter} type="checkbox" label="Show ONLY these coins (USDC won't show USDC-DAI)" onChange={handleCheckBoxChange} />
-          <Form.Check name='includeLPs' defaultChecked={includeLPs} type="checkbox" label="Include Single Assets" onChange={handleCheckBoxChange} />
-          <Form.Check name='includeSingleAssets' defaultChecked={includeSingleAssets} type="checkbox" label="Include Liquidity Pools" onChange={handleCheckBoxChange}  />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Desired Platforms</Form.Label>
+          <Form.Control name='desiredPlatforms' defaultValue={desiredPlatforms} size="sm" type="text" placeholder="eg. cake aave sushi" onChange={handleChange}/>
+        </Form.Group>
+        <Form.Group>
+          <Form.Check name='includeLPs' defaultChecked={includeLPs} type="checkbox" label="Include Liquidity Pools" onChange={handleCheckBoxChange} />
+          <Form.Check name='includeSingleAssets' defaultChecked={includeSingleAssets} type="checkbox" label="Include Single Assets" onChange={handleCheckBoxChange}  />
         </Form.Group>
       </Jumbotron>
 
