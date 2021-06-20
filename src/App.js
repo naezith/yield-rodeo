@@ -43,7 +43,7 @@ const App = () => {
   return (
     <Container className="p-3 App full-height">
       <Jumbotron>
-        <h1 className="header">NFT Marketplace</h1>
+        <h1 className="header">yield.rodeo</h1>
         {
           isLoading ?
             <Spinner animation="border" role="status"/> :
