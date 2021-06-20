@@ -8,6 +8,7 @@ import YieldTable from './components/YieldTable'
 import Filters from './components/Filters'
 import FiltersContext, {defaultFilters} from './contexts/filters.context'
 import TopNavbar from './components/TopNavbar'
+import {filterPools} from './utility/utils'
 
 const App = () => {
   const [yields, setYields] = useState([])
@@ -22,6 +23,7 @@ const App = () => {
     fetchData()
   }, [])
 
+  const filteredYields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
   return (
     <div className='full-height'>
       <Container className="p-3 App">
@@ -30,8 +32,8 @@ const App = () => {
 
       <Container className="p-3 App">
         <FiltersContext.Provider value={{filters, setFilters}}>
-          <Filters poolCount={yields.length}/>
-          <YieldTable yields={yields} />
+          <Filters poolCount={filteredYields.length}/>
+          <YieldTable yields={filteredYields} />
         </FiltersContext.Provider>
       </Container>
     </div>

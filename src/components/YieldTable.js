@@ -118,19 +118,14 @@ const columns = [
   }
 ]
 
-const YieldTable = ({yields}) => {
-  const { filters } = useContext(FiltersContext)
-
-  yields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
-
-  return <BootstrapTable
-            keyField="key"
-            data={yields}
-            columns={columns}
-            striped
-            hover
-            bootstrap4
-            defaultSorted={[{ dataField: 'totalApy', order: 'desc'}]}/>
-}
+const YieldTable = ({yields}) =>
+  <BootstrapTable
+    keyField="key"
+    data={yields}
+    columns={columns}
+    striped
+    hover
+    bootstrap4
+    defaultSorted={[{ dataField: 'totalApy', order: 'desc'}]}/>
 
 export default YieldTable
