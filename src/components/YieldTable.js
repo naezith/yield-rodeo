@@ -36,7 +36,7 @@ const dailyFormatter = totalApy => formatPercentage(calcDaily(totalApy))
 const tradingFeesFormatter = pool =>
 pool.tradingApr ?
   <OverlayTrigger
-    trigger="click"
+    trigger={['focus']}
     overlay={
       <Popover id="popover-basic">
         <Popover.Title as="h3">APY Breakdown</Popover.Title>
@@ -120,8 +120,6 @@ const columns = [
 
 const YieldTable = ({yields}) => {
   const { filters } = useContext(FiltersContext)
-
-  console.log(filters)
 
   yields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
 
