@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import './YieldTable.scss'
 
 import BootstrapTable from 'react-bootstrap-table-next'
@@ -9,18 +9,23 @@ import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
 
 import {Col, Image, OverlayTrigger, Popover} from 'react-bootstrap'
-import {coinLogoUrl, poolLogoUrl} from '../utility/api'
-import {calcDaily, filterPools, formatFiat, formatInteger, formatPercentage, getPoolName} from '../utility/utils'
-
-import FiltersContext from '../contexts/filters.context'
+import {coinLogoUrl} from '../utility/api'
+import {calcDaily, formatFiat, formatInteger, formatPercentage, getPoolName} from '../utility/utils'
 
 const poolFormatter = pool =>
-  <div className='pool-name'>
-  <span>
-    <Image src={pool.coinB ? poolLogoUrl(pool.coinA, pool.coinB) : coinLogoUrl(pool.coinA)} />
-    {' '}{getPoolName(pool)}
-  </span>
-  </div>
+  <Container className='pool-name'>
+    <Row>
+      <Col className='logo-col'>
+        <Image src={coinLogoUrl(pool.coinA)} roundedCircle/>
+      </Col>
+      <Col>
+        {getPoolName(pool)}
+      </Col>
+      <Col className='logo-col'>
+        <Image src={coinLogoUrl(pool.coinB || pool.coinA)} roundedCircle/>
+      </Col>
+    </Row>
+  </Container>
 
 const apyFormatter = totalApy => formatPercentage(totalApy)
 
