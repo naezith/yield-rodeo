@@ -43,4 +43,5 @@ export const getYieldsWithPrices = async () => {
   }).filter(pool => pool.tvl > 0)
 }
 
-export const coinLogoUrl = ticker => 'https://trustwallet-assets-api.vercel.app/api/symbol/' + ticker
+export const poolLogoUrl = (coinA, coinB) => 'https://farm.army/token/' + coinA.toLowerCase() + '-' + coinB.toLowerCase() + '.png'
+export const coinLogoUrl = ticker => 'https://farm.army/token/' + ticker + '.png'
