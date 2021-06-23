@@ -74,7 +74,7 @@ export const getYieldsWithPrices = async () => {
       tvl: tvlToken,
       ...apyBreakdown
     }
-  }).filter(pool => pool.tvl > 0 && pool.totalApy > 0.01)
+  }).filter(pool => pool.tvl > 0 && pool.totalApy > 0.0001)
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)
 }
 
