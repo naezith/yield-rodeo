@@ -24,6 +24,8 @@ const poolFormatter = pool =>
     </Row>
   </Container>
 
+const networkFormatter = network => network.toUpperCase()
+
 const apyFormatter = totalApy => formatPercentage(totalApy)
 
 const dailyFormatter = totalApy => formatPercentage(calcDaily(totalApy))
@@ -78,6 +80,13 @@ pool.tradingApr ?
 const tvlFormatter = tvl => formatFiat(tvl)
 
 const columns = [
+  {
+    dataField: "network",
+    text: "Network",
+    sort: true,
+    formatter: networkFormatter
+  },
+
   {
     dataField: "platform",
     text: "Platform",
