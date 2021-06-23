@@ -9,8 +9,8 @@ import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
 
 import {Col, Image, OverlayTrigger, Popover} from 'react-bootstrap'
-import {coinLogoUrl, poolLogoUrl} from '../utility/api'
-import {calcDaily, formatFiat, formatInteger, formatPercentage, getPoolName} from '../utility/utils'
+import {poolLogoUrl} from '../utility/api'
+import {calcDaily, formatFiat, formatInteger, formatPercentage} from '../utility/utils'
 
 const poolFormatter = pool =>
   <Container className='pool-name'>
@@ -19,7 +19,7 @@ const poolFormatter = pool =>
         <Image src={poolLogoUrl(pool.logo)} roundedCircle/>
       </Col>
       <Col>
-        {getPoolName(pool)}
+        {pool.name}
       </Col>
     </Row>
   </Container>

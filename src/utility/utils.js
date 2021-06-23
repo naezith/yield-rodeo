@@ -12,8 +12,6 @@ export const calcDaily = apy => {
   return g;
 }
 
-export const getPoolName = (pool) => `${pool.coinA}${pool.coinB ? ` + ${pool.coinB}` : ''}`
-
 export const formatPercentage = (num) => {
   const text = numeral(num).format('0.00a%')
   return text.indexOf('NaN') !== -1 ? '🔥' : text
