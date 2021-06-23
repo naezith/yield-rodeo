@@ -4,8 +4,16 @@
         max-width: unset;
     }
     img {
-        width: 2em;
+        height: 2em;
     }
+
+    img:last-child {
+        margin-right: 0.25em;
+    }
+}
+
+.stacked-logo:not(:first-child) {
+    margin-left: -1.25em;
 }
 
 .react-bootstrap-table table {

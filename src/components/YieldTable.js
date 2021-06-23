@@ -8,21 +8,19 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
 
-import {Col, Image, OverlayTrigger, Popover} from 'react-bootstrap'
-import {poolLogoUrl} from '../utility/api'
+import {Image, OverlayTrigger, Popover} from 'react-bootstrap'
+import {coinLogoUrl, poolLogoUrl} from '../utility/api'
 import {calcDaily, formatFiat, formatInteger, formatPercentage} from '../utility/utils'
 
 const poolFormatter = pool =>
-  <Container className='pool-name'>
-    <Row>
-      <Col className='logo-col'>
-        <Image src={poolLogoUrl(pool.logo)} roundedCircle/>
-      </Col>
-      <Col>
-        {pool.name}
-      </Col>
-    </Row>
-  </Container>
+  <div className='pool-name'>
+    <span>{pool.logo ?
+            <Image src={poolLogoUrl(pool.logo)} /> :
+          pool.assets.length === 1 ?
+            <Image src={coinLogoUrl(pool.assets[0])} /> :
+              pool.assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} />)
+        } {pool.name}</span>
+  </div>
 
 const networkFormatter = network => network.toUpperCase()
 
