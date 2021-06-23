@@ -17,8 +17,8 @@ const poolFormatter = pool =>
     <span>{pool.logo ?
             <Image src={poolLogoUrl(pool.logo)} /> :
           pool.assets.length === 1 ?
-            <Image src={coinLogoUrl(pool.assets[0])} /> :
-              pool.assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} />)
+            <Image src={coinLogoUrl(pool.assets[0])} roundedCircle /> :
+              pool.assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} roundedCircle />)
         } {pool.name}</span>
   </div>
 
