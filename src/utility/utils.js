@@ -30,8 +30,6 @@ export const filterPools = (pools, filters) => {
   const desiredPlatformsArray = desiredPlatforms.trim().toUpperCase().split(' ')
 
   return pools.filter(pool => {
-    const coinA = pool.coinA.toLowerCase()
-    const coinB = !pool.coinB ? undefined : pool.coinB.toLowerCase()
     const assets = pool.assets.map(a => a.toLowerCase())
 
     if(!includeLPs && pool.assets.length > 1) return false

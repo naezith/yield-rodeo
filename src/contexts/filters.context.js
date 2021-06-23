@@ -11,8 +11,8 @@ export const emptyFilters = {
 
 export const defaultFilters = {
   ...emptyFilters,
-  desiredCoins: 'usdc dai busd',
-  desiredPlatforms: 'cake auto aave sushi quick venus 1inch ellipsis mdex'
+  desiredCoins: 'usdc dai busd usdt',
+  desiredPlatforms: ''
 }
 
 const FiltersContext = createContext(defaultFilters)

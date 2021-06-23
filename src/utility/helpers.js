@@ -27,8 +27,6 @@ export const arrayHasAllOfArray = (assets, desired, exact=false) => {
       if(desired.indexOf(a) === -1) return false
     }
     else {
-      // assets: usdc-busd
-      // desired: usdc busd dai
       let exists = false
       for(const d of desired) {
         if(a.indexOf(d) !== -1) {

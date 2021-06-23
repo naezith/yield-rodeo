@@ -36,7 +36,7 @@ const Filters = ({poolCount}) => {
           </Form.Check>
           <Form.Check>
             <Form.Check.Input id='exactMatch' name='exactMatch' checked={exactMatch} defaultChecked={exactMatch} type="checkbox" onChange={handleCheckBoxChange} />
-            <Form.Check.Label for='exactMatch'>Exact Match <span className='silent'>(USDC won't match ibUSDC)</span></Form.Check.Label>
+            <Form.Check.Label for='exactMatch'>Exact Match <span className='silent'>(USDT won't match fUSDT)</span></Form.Check.Label>
           </Form.Check>
         </Form.Group>
 

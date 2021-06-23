@@ -20,6 +20,7 @@ const getPools = async (network, type) => {
   text = text.substr(text.indexOf(beginningText) + beginningText.length - 1,
       text.indexOf(endingText) - endingText.length)
       .replaceAll('earnContractAbi: govPoolABI,', '')
+      .replaceAll(`, '4BELT'`, '')
 
   const jsonObj = eval(text)
 
@@ -57,22 +58,8 @@ const fetchAllPools = async () => {
   return allCombined
 }
 
-
-export const getYields = async () => {
-  const allPools = await fetchAllPools()
-
-  return allPools.map(pool => {
-    const [platform, coinA, coinB] = pool.id.split('-').map(w => w.toUpperCase())
-    return {
-      key: pool.key,
-      platform, coinA, coinB,
-      ...pool
-    }
-  })
-}
-
 export const getYieldsWithPrices = async () => {
-  const yields = await getYields()
+  const yields = await fetchAllPools()
   const prices = await (await fetch('https://api.beefy.finance/lps')).json()
   const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown')).json()
   const tvls = await (await fetch('https://api.beefy.finance/tvl')).json()
@@ -82,7 +69,7 @@ export const getYieldsWithPrices = async () => {
     const tvlToken = tvls[pool.network_id][pool.id]
     const apyBreakdown = apyBreakdowns[pool.id]
     return {
-    ...pool,
+      ...pool,
       lpPrice: lpPrice,
       tvl: tvlToken,
       ...apyBreakdown
