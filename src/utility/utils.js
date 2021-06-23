@@ -26,8 +26,9 @@ export const formatFiat = (num) => {
 }
 
 export const filterPools = (pools, filters) => {
-  const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, includeSingleAssets, includeLPs } = filters
+  const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, desiredNetworks, includeSingleAssets, includeLPs } = filters
   const desiredPlatformsArray = desiredPlatforms.trim().toUpperCase().split(' ')
+  const desiredNetworksArray = desiredNetworks.trim().toUpperCase().split(' ')
 
   return pools.filter(pool => {
     const assets = pool.assets.map(a => a.toLowerCase())
@@ -56,6 +57,10 @@ export const filterPools = (pools, filters) => {
     // Filter platforms
     if(desiredPlatformsArray.length > 0)
       if(!textHasAnyOfArray(pool.platform.toUpperCase(), desiredPlatformsArray)) return false
+
+    // Filter networks
+    if(desiredNetworksArray.length > 0)
+      if(!textHasAnyOfArray(pool.network.toUpperCase(), desiredNetworksArray)) return false
 
     return true
   })

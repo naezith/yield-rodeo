@@ -5,6 +5,7 @@ export const emptyFilters = {
   strictFilter: true,
   exactMatch: false,
   desiredPlatforms: '',
+  desiredNetworks: '',
   includeSingleAssets: true,
   includeLPs: true
 }
@@ -12,7 +13,6 @@ export const emptyFilters = {
 export const defaultFilters = {
   ...emptyFilters,
   desiredCoins: 'usdc dai busd usdt',
-  desiredPlatforms: ''
 }
 
 const FiltersContext = createContext(defaultFilters)

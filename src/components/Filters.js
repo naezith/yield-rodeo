@@ -23,7 +23,7 @@ const Filters = ({poolCount}) => {
     setFilters({...filters, [name]: checked })
   }
 
-  const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, includeSingleAssets, includeLPs } = filters
+  const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, desiredNetworks, includeSingleAssets, includeLPs } = filters
 
   return (
       <Jumbotron className='filters'>
@@ -58,6 +58,13 @@ const Filters = ({poolCount}) => {
         <Form.Group>
           <Form.Label>🏰 Platforms to Ride</Form.Label>
           <Form.Control name='desiredPlatforms' value={desiredPlatforms} size="sm" type="text" placeholder="e.g. cake aave sushi" onChange={handleChange}/>
+        </Form.Group>
+
+        <hr/>
+
+        <Form.Group>
+          <Form.Label>🌐 Networks to Ride</Form.Label>
+          <Form.Control name='desiredNetworks' value={desiredNetworks} size="sm" type="text" placeholder="e.g. bsc polygon" onChange={handleChange}/>
         </Form.Group>
 
         <hr/>
