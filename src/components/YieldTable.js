@@ -1,4 +1,5 @@
 import React from 'react'
+import numeral from 'numeral'
 import './YieldTable.scss'
 
 import BootstrapTable from 'react-bootstrap-table-next'
@@ -39,6 +40,10 @@ const apyFormatter = totalApy => formatPercentage(totalApy)
 
 const dailyFormatter = totalApy => formatPercentage(calcDaily(totalApy))
 
+const withdrawalFeeFormatter = (withdrawalFee, {totalApy}) => <span className={
+    numeral(withdrawalFee).value() === 0 ? 'text-success' :
+    numeral(withdrawalFee).value() > calcDaily(totalApy) ? 'text-danger' : ''}>{withdrawalFee}</span>
+
 const tradingFeesFormatter = pool =>
 pool.tradingApr ?
   <OverlayTrigger
@@ -50,7 +55,7 @@ pool.tradingApr ?
           <Table striped bordered hover>
             <tbody>
             {pool.compoundingsPerYear && <tr>
-              <td>Compounds </td>
+              <td>Compounds</td>
               <td>{formatInteger(pool.compoundingsPerYear)}</td>
             </tr>}
             {pool.vaultApr && <tr>
@@ -125,6 +130,12 @@ const columns = [
     text: "Daily",
     sort: true,
     formatter: dailyFormatter
+  },
+  {
+    dataField: "withdrawalFee",
+    text: "Withdraw Fee",
+    sort: true,
+    formatter: withdrawalFeeFormatter
   },
   {
     dataField: "self",

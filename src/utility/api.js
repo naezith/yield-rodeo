@@ -84,6 +84,8 @@ export const getYieldsWithPrices = async () => {
     const tvlToken = tvls[pool.network_id][pool.id]
     const apyBreakdown = apyBreakdowns[pool.id]
     return {
+      depositFee: '0.0%',
+      withdrawalFee: '0.1%',
       ...pool,
       lpPrice: lpPrice,
       tvl: tvlToken,

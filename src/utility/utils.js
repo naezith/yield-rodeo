@@ -1,6 +1,6 @@
 import {arrayHasAllOfArray, arrayHasAnyOfArray, textHasAnyOfArray} from './helpers'
 
-var numeral = require('numeral')
+const numeral = require('numeral')
 
 export const calcDaily = apy => {
   const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
