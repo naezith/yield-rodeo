@@ -31,7 +31,7 @@ const TopNavbar = () => {
           </OverlayTrigger>
         </Nav>
       <Nav>
-        <Nav.Link className='navbar-contact' href={'https://naezith.com/?id=contact'} target="_blank">Contact</Nav.Link>
+        <Nav.Link className='navbar-contact' href={'https://naezith.com/?id=contact'} target="_blank" rel="noreferrer">Contact</Nav.Link>
       </Nav>
     </Navbar>
   )

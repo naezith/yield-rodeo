@@ -9,42 +9,42 @@ import Table from 'react-bootstrap/Table'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import {Image, Nav, OverlayTrigger, Popover} from 'react-bootstrap'
+import {Image, OverlayTrigger, Popover} from 'react-bootstrap'
 import {addressUrl, coinLogoUrl, poolLogoUrl} from '../utility/api'
-import {calcDaily, formatFiat, formatInteger, formatPercentage} from '../utility/utils'
+import {formatFiat, formatInteger, formatPercentage} from '../utility/utils'
 
 const expandRow = {
   renderer: pool => (
     <Row>
       { (pool.addLiquidityUrl || pool.buyTokenUrl) &&
-        <Col>{pool.addLiquidityUrl && <a href={pool.addLiquidityUrl} target="_blank">Add Liquidity</a>} {(pool.addLiquidityUrl && pool.buyTokenUrl) && ' | '} {pool.buyTokenUrl && <a href={pool.buyTokenUrl} target="_blank">Buy Token</a>}</Col>}
+        <Col>{pool.addLiquidityUrl && <a href={pool.addLiquidityUrl} target="_blank" rel="noreferrer">Add Liquidity</a>} {(pool.addLiquidityUrl && pool.buyTokenUrl) && ' | '} {pool.buyTokenUrl && <a href={pool.buyTokenUrl} target="_blank" rel="noreferrer">Buy Token</a>}</Col>}
       {pool.tokenAddress &&
-        <Col><a href={addressUrl(pool.network, pool.tokenAddress)} target="_blank">{pool.tokenAddress}</a></Col>}
+        <Col><a href={addressUrl(pool.network, pool.tokenAddress)} target="_blank" rel="noreferrer">{pool.tokenAddress}</a></Col>}
     </Row>
   )
 }
 
-const poolFormatter = pool =>
+const poolFormatter = (_, {logo, assets, name}) =>
   <div className='pool-name'>
-    <span>{pool.logo ?
-            <Image src={poolLogoUrl(pool.logo)} /> :
-          pool.assets.length === 1 ?
-            <Image src={coinLogoUrl(pool.assets[0])} roundedCircle /> :
-              pool.assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} roundedCircle />)
-        } {pool.name}</span>
+    <span>{logo ?
+            <Image src={poolLogoUrl(logo)} /> :
+          assets.length === 1 ?
+            <Image src={coinLogoUrl(assets[0])} roundedCircle /> :
+              assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} roundedCircle />)
+        } {name}</span>
   </div>
 
 const networkFormatter = network => network.toUpperCase()
 
 const apyFormatter = totalApy => formatPercentage(totalApy)
 
-const dailyFormatter = totalApy => formatPercentage(calcDaily(totalApy))
+const dailyFormatter = dailyApy => formatPercentage(dailyApy)
 
-const withdrawalFeeFormatter = (withdrawalFee, {totalApy}) => <span className={
+const withdrawalFeeFormatter = (withdrawalFee, {dailyApy}) => <span className={
     numeral(withdrawalFee).value() === 0 ? 'text-success' :
-    numeral(withdrawalFee).value() > calcDaily(totalApy) ? 'text-danger' : ''}>{withdrawalFee}</span>
+    numeral(withdrawalFee).value() > dailyApy ? 'text-danger' : ''}>{withdrawalFee}</span>
 
-const tradingFeesFormatter = pool =>
+const tradingFeesFormatter = (_, pool) =>
 pool.tradingApr ?
   <OverlayTrigger
     trigger={['focus']}
@@ -115,7 +115,7 @@ const columns = [
     sort: true
   },
   {
-    dataField: "self",
+    dataField: "name",
     text: "Pool",
     formatter: poolFormatter
   },
@@ -126,7 +126,7 @@ const columns = [
     formatter: apyFormatter
   },
   {
-    dataField: "totalApy",
+    dataField: "dailyApy",
     text: "Daily",
     sort: true,
     formatter: dailyFormatter
@@ -138,7 +138,7 @@ const columns = [
     formatter: withdrawalFeeFormatter
   },
   {
-    dataField: "self",
+    dataField: "tradingApr",
     text: "Trading Fees",
     formatter: tradingFeesFormatter
   },

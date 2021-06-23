@@ -1,3 +1,5 @@
+import {calcDaily} from './utils'
+
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon']
 const network_info = {
   'bsc': {
@@ -55,11 +57,9 @@ const fetchAllPools = async () => {
     'pool': {},
   }
 
-  let lengths = 0
   await Promise.all(Object.keys(pools).map(async type => {
     await Promise.all(networks.map(async network => {
       pools[type][network] = await getPools(network, type)
-      lengths += pools[type][network].length
     }))
   }))
 
@@ -86,6 +86,7 @@ export const getYieldsWithPrices = async () => {
     return {
       depositFee: '0.0%',
       withdrawalFee: '0.1%',
+      dailyApy: apyBreakdown && calcDaily(apyBreakdown.totalApy),
       ...pool,
       lpPrice: lpPrice,
       tvl: tvlToken,
