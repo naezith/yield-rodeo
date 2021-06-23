@@ -91,5 +91,4 @@ export const getYieldsWithPrices = async () => {
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)
 }
 
-export const poolLogoUrl = (coinA, coinB) => 'https://farm.army/token/' + coinA.toLowerCase() + '-' + coinB.toLowerCase() + '.png'
-export const coinLogoUrl = ticker => 'https://trustwallet-assets-api.vercel.app/api/symbol/'  + ticker
+export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
