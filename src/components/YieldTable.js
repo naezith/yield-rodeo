@@ -47,7 +47,6 @@ const withdrawalFeeFormatter = (withdrawalFee, {dailyApy}) => <span className={
 const tradingFeesFormatter = (_, pool) =>
 pool.tradingApr ?
   <OverlayTrigger
-    trigger={['focus']}
     overlay={
       <Popover id="popover-basic">
         <Popover.Title as="h3">APY Breakdown</Popover.Title>
