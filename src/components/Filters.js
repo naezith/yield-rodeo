@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 import {Form, ButtonGroup} from 'react-bootstrap'
 import FiltersContext, {emptyFilters, defaultFilters} from '../contexts/filters.context'
 
-const Filters = ({poolCount}) => {
+const Filters = ({loading, poolCount}) => {
   const { filters, setFilters } = useContext(FiltersContext)
 
   const handleChange = event => {
@@ -69,7 +69,7 @@ const Filters = ({poolCount}) => {
 
         <hr/>
 
-        <span>{poolCount === 0 ? 'No pools found, please check your filters' : `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on 🐮 Beefy Finance.`}</span>
+        <span>{loading ? "Loading pools..." : poolCount === 0 ? 'No pools found, please check your filters' : `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on 🐮 Beefy Finance.`}</span>
         <ButtonGroup className='reset-filters-btn'>
           <Button size='sm' variant='info' onClick={() => { setFilters(emptyFilters)}}>Clear Filters</Button>
           <Button size='sm' variant='success' onClick={() => { setFilters(defaultFilters)}}>Default Filters</Button>

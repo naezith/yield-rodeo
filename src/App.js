@@ -9,15 +9,19 @@ import Filters from './components/Filters'
 import FiltersContext, {defaultFilters} from './contexts/filters.context'
 import TopNavbar from './components/TopNavbar'
 import {filterPools} from './utility/utils'
+import {Spinner} from 'react-bootstrap'
 
 const App = () => {
   const [yields, setYields] = useState([])
   const [filters, setFilters] = useState(defaultFilters)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
       // Get yields
+      setLoading(true)
       const _yields = await getYieldsWithPrices()
+      setLoading(false)
       setYields(_yields)
     }
     fetchData()
@@ -32,8 +36,15 @@ const App = () => {
 
       <Container className="p-3 App">
         <FiltersContext.Provider value={{filters, setFilters}}>
-          <Filters poolCount={filteredYields.length}/>
-          <YieldTable yields={filteredYields} />
+          <Filters loading={loading} poolCount={filteredYields.length}/>
+          <></>
+          { loading ?
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner> :
+
+            <YieldTable yields={filteredYields} />
+          }
         </FiltersContext.Provider>
       </Container>
     </div>
