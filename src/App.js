@@ -31,7 +31,7 @@ const App = () => {
   const filteredYields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
   return (
     <div className='full-height'>
-      <Container className="p-3 App" fluid>
+      <Container className="p-3 App">
         <Row>
           <Col>
           <TopNavbar />
@@ -40,7 +40,7 @@ const App = () => {
       </Container>
 
       <FiltersContext.Provider value={{filters, setFilters}}>
-      <Container className="p-3 App" fluid>
+      <Container className="p-3 App">
         <Row>
           <Col>
             <Filters loading={loading} poolCount={filteredYields.length}/>
