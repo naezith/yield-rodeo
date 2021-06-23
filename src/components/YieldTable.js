@@ -3,14 +3,25 @@ import './YieldTable.scss'
 
 import BootstrapTable from 'react-bootstrap-table-next'
 
-import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
-import {Image, OverlayTrigger, Popover} from 'react-bootstrap'
-import {coinLogoUrl, poolLogoUrl} from '../utility/api'
+import {Image, Nav, OverlayTrigger, Popover} from 'react-bootstrap'
+import {addressUrl, coinLogoUrl, poolLogoUrl} from '../utility/api'
 import {calcDaily, formatFiat, formatInteger, formatPercentage} from '../utility/utils'
+
+const expandRow = {
+  renderer: pool => (
+    <Row>
+      { (pool.addLiquidityUrl || pool.buyTokenUrl) &&
+        <Col>{pool.addLiquidityUrl && <a href={pool.addLiquidityUrl} target="_blank">Add Liquidity</a>} {(pool.addLiquidityUrl && pool.buyTokenUrl) && ' | '} {pool.buyTokenUrl && <a href={pool.buyTokenUrl} target="_blank">Buy Token</a>}</Col>}
+      {pool.tokenAddress &&
+        <Col><a href={addressUrl(pool.network, pool.tokenAddress)} target="_blank">{pool.tokenAddress}</a></Col>}
+    </Row>
+  )
+}
 
 const poolFormatter = pool =>
   <div className='pool-name'>
@@ -50,6 +61,10 @@ pool.tradingApr ?
               <td>Beefy Fee</td>
               <td>{formatPercentage(pool.beefyPerformanceFee)}</td>
             </tr>}
+            {pool.callFee && <tr>
+              <td>Call Fee</td>
+              <td>{formatPercentage(pool.callFee/100)}</td>
+            </tr>}
             {pool.vaultApy && <tr>
               <td>Vault APY</td>
               <td>{formatPercentage(pool.vaultApy)}</td>
@@ -61,6 +76,10 @@ pool.tradingApr ?
             {pool.tradingApr && <tr>
               <td>Trading APR</td>
               <td>{formatPercentage(pool.tradingApr)}</td>
+            </tr>}
+            {pool.totalApy && <tr>
+              <td>Total APY</td>
+              <td>{formatPercentage(pool.totalApy)}</td>
             </tr>}
             {pool.totalApy && <tr>
               <td>Total APY</td>
@@ -125,6 +144,7 @@ const YieldTable = ({yields}) =>
     keyField="key"
     data={yields}
     columns={columns}
+    expandRow={expandRow}
     striped
     hover
     bootstrap4

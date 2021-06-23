@@ -1,10 +1,25 @@
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon']
-const network_ids = {
-  'bsc': 56,
-  'heco': 128,
-  'polygon': 137,
-  'fantom': 250,
-  'avalanche': 43114
+const network_info = {
+  'bsc': {
+    id: 56,
+    explorer: 'https://bscscan.com/address/'
+  },
+  'heco': {
+    id: 128,
+    explorer: 'https://hecoinfo.com/address/'
+  },
+  'polygon': {
+    id: 137,
+    explorer: 'https://polygonscan.com/address/'
+  },
+  'fantom': {
+    id: 250,
+    explorer: 'https://ftmscan.com/address/'
+  },
+  'avalanche': {
+    id: 43114,
+    explorer: 'https://cchain.explorer.avax.network/address/'
+  },
 }
 
 const getPools = async (network, type) => {
@@ -26,7 +41,7 @@ const getPools = async (network, type) => {
 
   for(let pool of jsonObj) {
     pool.network = network
-    pool.network_id = network_ids[network]
+    pool.network_id = network_info[network].id
     pool.key = network + '-' + pool.id
     pool.type = type // stake or pool
   }
@@ -80,3 +95,4 @@ export const getYieldsWithPrices = async () => {
 
 export const coinLogoUrl = ticker => 'https://trustwallet-assets-api.vercel.app/api/symbol/'  + ticker
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
+export const addressUrl = (network, address) => network_info[network].explorer + address
