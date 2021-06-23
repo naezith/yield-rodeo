@@ -5,7 +5,7 @@ import './Filters.scss'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 
-import {Form, ButtonGroup} from 'react-bootstrap'
+import {Form, ButtonGroup, Spinner} from 'react-bootstrap'
 import FiltersContext, {emptyFilters, defaultFilters} from '../contexts/filters.context'
 
 const Filters = ({loading, poolCount}) => {
@@ -69,7 +69,9 @@ const Filters = ({loading, poolCount}) => {
 
         <hr/>
 
-        <span>{loading ? "Loading pools..." : poolCount === 0 ? 'No pools found, please check your filters' : `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on 🐮 Beefy Finance.`}</span>
+        <span>{loading ? <>Loading pools... <Spinner size='sm' animation="border" role="status"/></> :
+          poolCount === 0 ? 'No pools found, please check your filters' :
+            `Found ${poolCount} pool${poolCount === 1 ? '' : 's'} on 🐮 Beefy Finance.`}</span>
         <ButtonGroup className='reset-filters-btn'>
           <Button size='sm' variant='info' onClick={() => { setFilters(emptyFilters)}}>Clear Filters</Button>
           <Button size='sm' variant='success' onClick={() => { setFilters(defaultFilters)}}>Default Filters</Button>
