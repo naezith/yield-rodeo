@@ -73,7 +73,7 @@ pool.tradingApr ?
     }
   >
     <Button variant="success">Included</Button>
-  </OverlayTrigger> : !pool.coinB ? '-' : "Unknown"
+  </OverlayTrigger> : pool.assets.length === 1 ? '-' : "Unknown"
 
 const tvlFormatter = tvl => formatFiat(tvl)
 

@@ -1,4 +1,4 @@
-import {textHasAnyOfArray} from './helpers'
+import {arrayHasAllOfArray, arrayHasAnyOfArray, textHasAnyOfArray} from './helpers'
 
 var numeral = require('numeral')
 
@@ -32,24 +32,25 @@ export const filterPools = (pools, filters) => {
   return pools.filter(pool => {
     const coinA = pool.coinA.toLowerCase()
     const coinB = !pool.coinB ? undefined : pool.coinB.toLowerCase()
+    const assets = pool.assets.map(a => a.toLowerCase())
 
-    if(!includeLPs && coinB) return false
-    if(!includeSingleAssets && !coinB) return false
+    if(!includeLPs && pool.assets.length > 1) return false
+    if(!includeSingleAssets && pool.assets.length === 1) return false
 
     // Filter coins
     const desiredCoinsArray = desiredCoins.trim().toLowerCase().split(' ')
     if(desiredCoinsArray.length > 0) {
       // Single asset
-      if(!pool.coinB) {
-        if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch)) return false
+      if(pool.assets.length === 1) {
+        if(!arrayHasAnyOfArray(assets, desiredCoinsArray, exactMatch)) return false
       }
       // Liquidity Pool
       else {
         if(strictFilter) {
-          if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch) || !textHasAnyOfArray(coinB, desiredCoinsArray, exactMatch)) return false
+          if(!arrayHasAllOfArray(assets, desiredCoinsArray, exactMatch)) return false
         }
         else {
-          if(!textHasAnyOfArray(coinA, desiredCoinsArray, exactMatch) && !textHasAnyOfArray(coinB, desiredCoinsArray, exactMatch)) return false
+          if(!arrayHasAnyOfArray(assets, desiredCoinsArray, exactMatch)) return false
         }
       }
     }
