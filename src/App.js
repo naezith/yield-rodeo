@@ -9,7 +9,8 @@ import Filters from './components/Filters'
 import FiltersContext, {defaultFilters} from './contexts/filters.context'
 import TopNavbar from './components/TopNavbar'
 import {filterPools} from './utility/utils'
-import {Spinner} from 'react-bootstrap'
+import {Col, Spinner} from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
 
 const App = () => {
   const [yields, setYields] = useState([])
@@ -30,23 +31,34 @@ const App = () => {
   const filteredYields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
   return (
     <div className='full-height'>
-      <Container className="p-3 App">
-        <TopNavbar />
+      <Container className="p-3 App" fluid>
+        <Row>
+          <Col>
+          <TopNavbar />
+          </Col>
+        </Row>
       </Container>
 
-      <Container className="p-3 App">
-        <FiltersContext.Provider value={{filters, setFilters}}>
-          <Filters loading={loading} poolCount={filteredYields.length}/>
-          <></>
+      <FiltersContext.Provider value={{filters, setFilters}}>
+      <Container className="p-3 App" fluid>
+        <Row>
+          <Col>
+            <Filters loading={loading} poolCount={filteredYields.length}/>
+          </Col>
+        </Row>
           { loading ?
             <Spinner animation="border" role="status">
               <span className="sr-only">Loading...</span>
             </Spinner> :
 
-            <YieldTable yields={filteredYields} />
+            <Row>
+              <Col>
+                <YieldTable yields={filteredYields} />
+              </Col>
+            </Row>
           }
-        </FiltersContext.Provider>
       </Container>
+      </FiltersContext.Provider>
     </div>
   )
 }
