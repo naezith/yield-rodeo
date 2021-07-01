@@ -5,7 +5,7 @@ import './Filters.scss'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 
-import {Form, ButtonGroup, Spinner} from 'react-bootstrap'
+import {Form, ButtonGroup, Spinner, FormControl, InputGroup} from 'react-bootstrap'
 import FiltersContext, {emptyFilters, defaultFilters} from '../contexts/filters.context'
 
 const Filters = ({loading, poolCount}) => {
@@ -29,7 +29,7 @@ const Filters = ({loading, poolCount}) => {
       <Jumbotron className='filters'>
         <Form.Group>
           <Form.Label>💎 Coins to Ride</Form.Label>
-          <Form.Control name='desiredCoins' value={desiredCoins}size="sm" type="text" placeholder="e.g. usdc dai busd" onChange={handleChange} />
+          <Form.Control name='desiredCoins' value={desiredCoins} size="sm" type="text" placeholder="e.g. usdc dai busd" onChange={handleChange} />
           <Form.Check>
             <Form.Check.Input id='strictFilter' name='strictFilter' checked={strictFilter} type="checkbox" onChange={handleCheckBoxChange} />
             <Form.Check.Label htmlFor='strictFilter'>Show ONLY these coins <span className='silent'>(USDC won't show USDC-DAI)</span></Form.Check.Label>

@@ -1,4 +1,5 @@
 import {arrayHasAllOfArray, arrayHasAnyOfArray, textHasAnyOfArray} from './helpers'
+import React from 'react'
 
 const numeral = require('numeral')
 
@@ -12,18 +13,14 @@ export const calcDaily = apy => {
   return g;
 }
 
-export const formatPercentage = (num) => {
-  const text = numeral(num).format('0.00a%')
-  return text.indexOf('NaN') !== -1 ? '🔥' : text
+export const formatAny = (num, format) => {
+  const text = numeral(num).format(format)
+  return text.indexOf('NaN') !== -1 ? '' : text
 }
 
-export const formatInteger = (num) => {
-  return numeral(num).format('0,0')
-}
-
-export const formatFiat = (num) => {
-  return numeral(num).format('$0,0.0a')
-}
+export const formatPercentage = (num) => formatAny(num, '0.00a%')
+export const formatInteger = (num) => formatAny(num, '0,0')
+export const formatFiat = (num) => formatAny(num, '$0,0.0a')
 
 export const filterPools = (pools, filters) => {
   const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, desiredNetworks, includeSingleAssets, includeLPs } = filters
@@ -64,4 +61,17 @@ export const filterPools = (pools, filters) => {
 
     return true
   })
+}
+
+export const addApyValues = (yields, capital) => {
+  capital = capital ? parseFloat(capital) : 0
+  if(capital === 0) return yields
+
+  return yields.map(y => (
+    {
+      ...y,
+      totalApyAmount: numeral(y.totalApy).value() * capital,
+      dailyApyAmount: numeral(y.dailyApy).value() * capital
+    }
+  ))
 }

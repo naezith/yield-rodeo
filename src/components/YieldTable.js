@@ -36,9 +36,17 @@ const poolFormatter = (_, {logo, assets, name}) =>
 
 const networkFormatter = network => network.toUpperCase()
 
-const apyFormatter = totalApy => formatPercentage(totalApy)
 
-const dailyFormatter = dailyApy => formatPercentage(dailyApy)
+const formatNumberText = num => num === '' ? '🔥' : num
+
+const formatApyAndAmount = (apy, amount) =>
+  <>
+    <span>{formatNumberText(formatPercentage(apy))}</span>
+    {amount && formatFiat(amount) !== '' ? <span className={'text-success apy-fiat-text'}>{formatFiat(amount)}</span> : ''}
+  </>
+
+const apyFormatter = (totalApy, {totalApyAmount}) => formatApyAndAmount(totalApy, totalApyAmount)
+const dailyFormatter = (dailyApy, {dailyApyAmount}) => formatApyAndAmount(dailyApy, dailyApyAmount)
 
 const withdrawalFeeFormatter = (withdrawalFee, {dailyApy}) => <span className={
     numeral(withdrawalFee).value() === 0 ? 'text-success' :
@@ -80,10 +88,6 @@ pool.tradingApr ?
             {pool.tradingApr && <tr>
               <td>Trading APR</td>
               <td>{formatPercentage(pool.tradingApr)}</td>
-            </tr>}
-            {pool.totalApy && <tr>
-              <td>Total APY</td>
-              <td>{formatPercentage(pool.totalApy)}</td>
             </tr>}
             {pool.totalApy && <tr>
               <td>Total APY</td>

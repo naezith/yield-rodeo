@@ -8,12 +8,15 @@ import YieldTable from './components/YieldTable'
 import Filters from './components/Filters'
 import FiltersContext, {defaultFilters} from './contexts/filters.context'
 import TopNavbar from './components/TopNavbar'
-import {filterPools} from './utility/utils'
+import {addApyValues, filterPools} from './utility/utils'
 import {Col, Spinner} from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
+import Inputs from './components/Inputs'
+import InputsContext, {defaultInputs} from './contexts/inputs.context'
 
 const App = () => {
   const [yields, setYields] = useState([])
+  const [inputs, setInputs] = useState(defaultInputs)
   const [filters, setFilters] = useState(defaultFilters)
   const [loading, setLoading] = useState(true)
 
@@ -28,7 +31,7 @@ const App = () => {
     fetchData()
   }, [])
 
-  const filteredYields = filterPools(yields, filters).map(pool => ({ ...pool, self: pool }))
+  const finalYields = addApyValues(filterPools(yields, filters).map(pool => ({ ...pool, self: pool })), inputs.capital)
   return (
     <div className='full-height'>
       <Container className="p-3 App">
@@ -39,11 +42,13 @@ const App = () => {
         </Row>
       </Container>
 
+      <InputsContext.Provider value={{inputs, setInputs}}>
       <FiltersContext.Provider value={{filters, setFilters}}>
       <Container className="p-3 App">
         <Row>
           <Col>
-            <Filters loading={loading} poolCount={filteredYields.length}/>
+            <Inputs />
+            <Filters loading={loading} poolCount={finalYields.length}/>
           </Col>
         </Row>
           { loading ?
@@ -53,12 +58,13 @@ const App = () => {
 
             <Row>
               <Col>
-                <YieldTable yields={filteredYields} />
+                <YieldTable yields={finalYields} />
               </Col>
             </Row>
           }
       </Container>
       </FiltersContext.Provider>
+      </InputsContext.Provider>
     </div>
   )
 }
