@@ -5,7 +5,7 @@ import './Filters.scss'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Button from 'react-bootstrap/Button'
 
-import {Form, ButtonGroup, Spinner, FormControl, InputGroup} from 'react-bootstrap'
+import {Form, ButtonGroup, Spinner} from 'react-bootstrap'
 import FiltersContext, {emptyFilters, defaultFilters} from '../contexts/filters.context'
 
 const Filters = ({loading, poolCount}) => {

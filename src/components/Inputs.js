@@ -3,7 +3,7 @@ import React, {useContext} from 'react'
 import './Filters.scss'
 
 import Jumbotron from 'react-bootstrap/Jumbotron'
-import {Form, FormControl, InputGroup} from 'react-bootstrap'
+import {Form, InputGroup} from 'react-bootstrap'
 import InputsContext from '../contexts/inputs.context'
 
 const Inputs = () => {

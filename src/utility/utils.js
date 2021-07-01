@@ -1,5 +1,4 @@
 import {arrayHasAllOfArray, arrayHasAnyOfArray, textHasAnyOfArray} from './helpers'
-import React from 'react'
 
 const numeral = require('numeral')
 

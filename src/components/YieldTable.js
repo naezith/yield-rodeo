@@ -37,11 +37,14 @@ const poolFormatter = (_, {logo, assets, name}) =>
 const networkFormatter = network => network.toUpperCase()
 
 
-const formatNumberText = num => num === '' ? '🔥' : num
+const prettyPercentage = apy => {
+  const text = formatPercentage(apy)
+  return text === '' ? '🔥' : text
+}
 
 const formatApyAndAmount = (apy, amount) =>
   <>
-    <span>{formatNumberText(formatPercentage(apy))}</span>
+    <span>{prettyPercentage(apy)}</span>
     {amount && formatFiat(amount) !== '' ? <span className={'text-success apy-fiat-text'}>{formatFiat(amount)}</span> : ''}
   </>
 
@@ -67,31 +70,31 @@ pool.tradingApr ?
             </tr>}
             {pool.vaultApr && <tr>
               <td>Vault APR</td>
-              <td>{formatPercentage(pool.vaultApr)}</td>
+              <td>{prettyPercentage(pool.vaultApr)}</td>
             </tr>}
             {pool.beefyPerformanceFee && <tr>
               <td>Beefy Fee</td>
-              <td>{formatPercentage(pool.beefyPerformanceFee)}</td>
+              <td>{prettyPercentage(pool.beefyPerformanceFee)}</td>
             </tr>}
             {pool.callFee && <tr>
               <td>Call Fee</td>
-              <td>{formatPercentage(pool.callFee/100)}</td>
+              <td>{prettyPercentage(pool.callFee/100)}</td>
             </tr>}
             {pool.vaultApy && <tr>
               <td>Vault APY</td>
-              <td>{formatPercentage(pool.vaultApy)}</td>
+              <td>{prettyPercentage(pool.vaultApy)}</td>
             </tr>}
             {pool.lpFee && <tr>
               <td>LP Fee</td>
-              <td>{formatPercentage(pool.lpFee)}</td>
+              <td>{prettyPercentage(pool.lpFee)}</td>
             </tr>}
             {pool.tradingApr && <tr>
               <td>Trading APR</td>
-              <td>{formatPercentage(pool.tradingApr)}</td>
+              <td>{prettyPercentage(pool.tradingApr)}</td>
             </tr>}
             {pool.totalApy && <tr>
               <td>Total APY</td>
-              <td>{formatPercentage(pool.totalApy)}</td>
+              <td>{prettyPercentage(pool.totalApy)}</td>
             </tr>}
             </tbody>
           </Table>
@@ -136,7 +139,7 @@ const columns = [
   },
   {
     dataField: "withdrawalFee",
-    text: "Withdraw Fee",
+    text: "Withdraw",
     sort: true,
     formatter: withdrawalFeeFormatter
   },
