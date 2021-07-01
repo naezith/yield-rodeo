@@ -47,8 +47,10 @@ const App = () => {
       <Container className="p-3 App">
         <Row>
           <Col>
-            <Inputs />
             <Filters loading={loading} poolCount={finalYields.length}/>
+          </Col>
+          <Col>
+            <Inputs />
           </Col>
         </Row>
           { loading ?
