@@ -36,8 +36,8 @@ const getPools = async (network, type) => {
   const endingText = '];'
   text = text.substr(text.indexOf(beginningText) + beginningText.length - 1,
       text.indexOf(endingText) - endingText.length)
-      .replaceAll('earnContractAbi: govPoolABI,', '')
-      .replaceAll(`, '4BELT'`, '')
+      .replace(/earnContractAbi: govPoolABI,/g, '')
+      .replace(/, '4BELT'/g, '')
 
   const jsonObj = eval(text)
 
