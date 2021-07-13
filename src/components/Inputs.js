@@ -5,6 +5,7 @@ import './Filters.scss'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import {Form, InputGroup} from 'react-bootstrap'
 import InputsContext from '../contexts/inputs.context'
+import {formatAny} from '../utility/utils'
 
 const Inputs = () => {
   const { inputs, setInputs } = useContext(InputsContext)
@@ -15,7 +16,10 @@ const Inputs = () => {
     setInputs({...inputs, [name]: value })
   }
 
-  const { capital } = inputs
+  const { capital, amountBefore, amountAfter } = inputs
+
+  const pnl = (amountAfter - amountBefore) / amountBefore
+  const fieldsAreValid = amountAfter !== '' && amountBefore !== ''
 
   return (
     <Jumbotron className='filters'>
@@ -26,6 +30,24 @@ const Inputs = () => {
         </InputGroup.Prepend>
         <Form.Control name='capital' value={capital} type="number" placeholder="e.g. 1000" onChange={handleChange} />
       </InputGroup>
+
+      <hr/>
+
+      <Form.Label>🖩 Profit % Calculator </Form.Label>
+      <InputGroup className="mb-3" size="sm">
+        <InputGroup.Prepend>
+          <InputGroup.Text>Before</InputGroup.Text>
+        </InputGroup.Prepend>
+        <Form.Control name='amountBefore' value={amountBefore} type="number" placeholder="e.g. 1000" onChange={handleChange} />
+        <InputGroup.Prepend>
+          <InputGroup.Text>After</InputGroup.Text>
+        </InputGroup.Prepend>
+        <Form.Control name='amountAfter' value={amountAfter} type="number" placeholder="e.g. 1000" onChange={handleChange} />
+      </InputGroup>
+      <Form.Label className={ !fieldsAreValid || pnl > 0 ? 'text-success' : pnl < 0 ? 'text-danger' : ''}>
+        { fieldsAreValid ? 'P&L: ' + (pnl > 0 ? '+' : '') + formatAny(pnl, '0.[000]%') :
+          'Please fill the fields'}
+      </Form.Label>
     </Jumbotron>
   )
 }
