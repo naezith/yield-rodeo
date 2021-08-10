@@ -18,8 +18,10 @@ const Inputs = () => {
 
   const { capital, amountBefore, amountAfter } = inputs
 
-  const pnl = (amountAfter - amountBefore) / amountBefore
+  const amountDifference = amountAfter - amountBefore
+  const pnl = amountDifference / amountBefore
   const fieldsAreValid = amountAfter !== '' && amountBefore !== ''
+  const sign = pnl > 0 ? '+' : ''
 
   return (
     <Jumbotron className='filters'>
@@ -45,7 +47,7 @@ const Inputs = () => {
         <Form.Control name='amountAfter' value={amountAfter} type="number" placeholder="e.g. 1000" onChange={handleChange} />
       </InputGroup>
       <Form.Label className={ !fieldsAreValid || pnl > 0 ? 'text-success' : pnl < 0 ? 'text-danger' : ''}>
-        { fieldsAreValid ? 'P&L: ' + (pnl > 0 ? '+' : '') + formatAny(pnl, '0.[000]%') :
+        { fieldsAreValid ? 'P&L: ' + sign + formatAny(amountDifference, '0,0.[000]') + ' (' + sign + formatAny(pnl, '0.[000]%') + ')' :
           'Please fill the fields'}
       </Form.Label>
     </Jumbotron>
