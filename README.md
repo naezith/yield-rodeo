@@ -1,11 +1,5 @@
 # yield.rodeo
 
-```
-truffle migrate --reset
-```
-
-
-
 ## Available Scripts
 
 In the project directory, you can run:
