@@ -1,26 +1,34 @@
 import {calcDaily} from './utils'
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony']
 const network_info = {
   'bsc': {
     id: 56,
-    explorer: 'https://bscscan.com/address/'
+    explorer: 'https://bscscan.com/'
   },
   'heco': {
     id: 128,
-    explorer: 'https://hecoinfo.com/address/'
+    explorer: 'https://hecoinfo.com/'
   },
   'polygon': {
     id: 137,
-    explorer: 'https://polygonscan.com/address/'
+    explorer: 'https://polygonscan.com/'
   },
   'fantom': {
     id: 250,
-    explorer: 'https://ftmscan.com/address/'
+    explorer: 'https://ftmscan.com/'
   },
   'avalanche': {
     id: 43114,
-    explorer: 'https://cchain.explorer.avax.network/address/'
+    explorer: 'https://cchain.explorer.avax.network/'
+  },
+  'arbitrum': {
+    id: 42161,
+    explorer: 'https://arbiscan.io/'
+  },
+  'harmony': {
+    id: 1666600000,
+    explorer: 'https://explorer.harmony.one/'
   },
 }
 
@@ -99,4 +107,4 @@ export const getYieldsWithPrices = async () => {
 
 export const coinLogoUrl = ticker => 'https://trustwallet-assets-api.vercel.app/api/symbol/'  + ticker
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
-export const addressUrl = (network, address) => network_info[network].explorer + address
+export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
