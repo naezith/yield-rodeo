@@ -26,7 +26,7 @@ const TopNavbar = () => {
               setCopied(true)
               setTimeout(() => { setCopied(false) },1000)
             }}>
-              <span>❤️ 0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C ❤️</span>
+              <span>❤️ Donate: 0x6e1b11ad54068dd3C7A2cAf334A7010f0B59511C ❤️</span>
             </CopyToClipboard>
           </OverlayTrigger>
         </Nav>
