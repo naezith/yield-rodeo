@@ -1,6 +1,6 @@
 import {calcDaily} from './utils'
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo']
 const network_info = {
   'bsc': {
     id: 56,
@@ -29,6 +29,10 @@ const network_info = {
   'harmony': {
     id: 1666600000,
     explorer: 'https://explorer.harmony.one/'
+  },
+  'celo': {
+    id: 42220,
+    explorer: 'https://explorer.celo.org/'
   },
 }
 
