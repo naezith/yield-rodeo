@@ -1,6 +1,6 @@
 import {calcDaily} from './utils'
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver']
 const network_info = {
   'bsc': {
     id: 56,
@@ -33,6 +33,10 @@ const network_info = {
   'celo': {
     id: 42220,
     explorer: 'https://explorer.celo.org/'
+  },
+  'moonriver': {
+    id: 1285,
+    explorer: 'https://blockscout.moonriver.moonbeam.network/'
   },
 }
 
