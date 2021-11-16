@@ -1,6 +1,6 @@
 import {calcDaily} from './utils'
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos']
 const network_info = {
   'bsc': {
     id: 56,
@@ -37,6 +37,10 @@ const network_info = {
   'moonriver': {
     id: 1285,
     explorer: 'https://blockscout.moonriver.moonbeam.network/'
+  },
+  'cronos': {
+    id: 25,
+    explorer: 'https://cronos.crypto.org/explorer/'
   },
 }
 
@@ -98,7 +102,7 @@ export const getYieldsWithPrices = async () => {
 
   return yields.map(pool => {
     const lpPrice = prices[pool.id]
-    const tvlToken = tvls[pool.network_id][pool.id]
+    const tvlToken = tvls[pool.network_id] ? tvls[pool.network_id][pool.id] : ''
     const apyBreakdown = apyBreakdowns[pool.id]
     return {
       depositFee: '0.0%',
