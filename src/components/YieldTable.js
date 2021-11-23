@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 import {Image, OverlayTrigger, Popover} from 'react-bootstrap'
-import {addressUrl, coinLogoUrl, poolLogoUrl} from '../utility/api'
+import {addressUrl, coinLogoUrl, useFallbackImage, poolLogoUrl} from '../utility/api'
 import {formatFiat, formatInteger, formatPercentage} from '../utility/utils'
 
 const expandRow = {
@@ -29,8 +29,8 @@ const poolFormatter = (_, {logo, assets, name}) =>
     <span>{logo ?
             <Image src={poolLogoUrl(logo)} /> :
           assets.length === 1 ?
-            <Image src={coinLogoUrl(assets[0])} roundedCircle /> :
-              assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset)} roundedCircle />)
+            <Image src={coinLogoUrl(assets[0], 'svg')} onError={e => useFallbackImage(e, coinLogoUrl(assets[0], 'png'))} roundedCircle /> :
+              assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset, 'svg')} onError={e => useFallbackImage(e, coinLogoUrl(asset, 'png'))} roundedCircle />)
         } {name}</span>
   </div>
 

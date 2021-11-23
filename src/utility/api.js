@@ -104,6 +104,7 @@ export const getYieldsWithPrices = async () => {
     const lpPrice = prices[pool.id]
     const tvlToken = tvls[pool.network_id] ? tvls[pool.network_id][pool.id] : ''
     const apyBreakdown = apyBreakdowns[pool.id]
+    console.log(pool)
     return {
       depositFee: '0.0%',
       withdrawalFee: '0.1%',
@@ -117,6 +118,7 @@ export const getYieldsWithPrices = async () => {
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)
 }
 
-export const coinLogoUrl = ticker => 'https://farm.army/token/'  + ticker.toLowerCase() + '.webp?v=3'
+export const useFallbackImage = (ev, fallbackUrl) => { ev.target.src = fallbackUrl }
+export const coinLogoUrl = (ticker, ext='svg') => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/single-assets/'  + ticker + '.' + ext
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
 export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
