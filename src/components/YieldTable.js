@@ -16,10 +16,19 @@ import {formatFiat, formatInteger, formatPercentage} from '../utility/utils'
 const expandRow = {
   renderer: pool => (
     <Row>
-      { (pool.addLiquidityUrl || pool.buyTokenUrl) &&
-        <Col>{pool.addLiquidityUrl && <a href={pool.addLiquidityUrl} target="_blank" rel="noreferrer">Add Liquidity</a>} {(pool.addLiquidityUrl && pool.buyTokenUrl) && ' | '} {pool.buyTokenUrl && <a href={pool.buyTokenUrl} target="_blank" rel="noreferrer">Buy Token</a>}</Col>}
-      {pool.tokenAddress &&
-        <Col><a href={addressUrl(pool.network, pool.tokenAddress)} target="_blank" rel="noreferrer">{pool.tokenAddress}</a></Col>}
+    <Col>
+      <Row>
+        { pool.vaultUrl &&
+          <Col><b>{<a href={pool.vaultUrl} target="_blank" rel="noreferrer">Deposit on Beefy / View APY Chart</a>}</b></Col>}
+
+      </Row>
+      <Row>
+        { (pool.addLiquidityUrl || pool.buyTokenUrl) &&
+          <Col>{pool.addLiquidityUrl && <a href={pool.addLiquidityUrl} target="_blank" rel="noreferrer">Add Liquidity</a>} {(pool.addLiquidityUrl && pool.buyTokenUrl) && ' | '} {pool.buyTokenUrl && <a href={pool.buyTokenUrl} target="_blank" rel="noreferrer">Buy Token</a>}</Col>}
+        {pool.tokenAddress &&
+          <Col><a href={addressUrl(pool.network, pool.tokenAddress)} target="_blank" rel="noreferrer">{pool.tokenAddress}</a></Col>}
+      </Row>
+    </Col>
     </Row>
   )
 }

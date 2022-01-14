@@ -104,8 +104,8 @@ export const getYieldsWithPrices = async () => {
     const lpPrice = prices[pool.id]
     const tvlToken = tvls[pool.network_id] ? tvls[pool.network_id][pool.id] : ''
     const apyBreakdown = apyBreakdowns[pool.id]
-    console.log(pool)
     return {
+      vaultUrl: beefyUrl(pool.network, pool.id),  
       depositFee: '0.0%',
       withdrawalFee: '0.1%',
       dailyApy: apyBreakdown && calcDaily(apyBreakdown.totalApy),
@@ -122,3 +122,4 @@ export const useFallbackImage = (ev, fallbackUrl) => { ev.target.src = fallbackU
 export const coinLogoUrl = (ticker, ext='svg') => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/single-assets/'  + ticker + '.' + ext
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
 export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
+export const beefyUrl = (network, id) => 'https://beta.beefy.finance/#/'+ network + '/vault/' + id
