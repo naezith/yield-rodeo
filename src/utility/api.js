@@ -1,4 +1,4 @@
-import {calcDaily} from './utils'
+import {calcDaily, calcMonthly} from './utils'
 
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
 const network_info = {
@@ -135,6 +135,7 @@ export const getYieldsWithPrices = async () => {
       withdrawalFee: '0.1%',
       depositFee: '0%',
       dailyApy: apyBreakdown && calcDaily(apyBreakdown.totalApy),
+      monthlyApy: apyBreakdown && calcMonthly(apyBreakdown.totalApy),
       ...pool,
       lpPrice: lpPrice,
       tvl: tvlToken,

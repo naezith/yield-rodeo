@@ -12,6 +12,11 @@ export const calcDaily = apy => {
   return g;
 }
 
+export const calcMonthly = apy => {
+  return apy / 12
+}
+
+
 export const formatAny = (num, format) => {
   const text = numeral(num).format(format)
   return text.indexOf('NaN') !== -1 ? '' : text
@@ -70,7 +75,8 @@ export const addApyValues = (yields, capital) => {
     {
       ...y,
       totalApyAmount: numeral(y.totalApy).value() * capital,
-      dailyApyAmount: numeral(y.dailyApy).value() * capital
+      dailyApyAmount: numeral(y.dailyApy).value() * capital,
+      monthlyApyAmount: numeral(y.monthlyApy).value() * capital,
     }
   ))
 }

@@ -58,6 +58,7 @@ const formatApyAndAmount = (apy, amount) =>
   </>
 
 const apyFormatter = (totalApy, {totalApyAmount}) => formatApyAndAmount(totalApy, totalApyAmount)
+const monthlyFormatter = (monthlyApy, {monthlyApyAmount}) => formatApyAndAmount(monthlyApy, monthlyApyAmount)
 const dailyFormatter = (dailyApy, {dailyApyAmount}) => formatApyAndAmount(dailyApy, dailyApyAmount)
 
 const withdrawalFeeFormatter = (withdrawalFee, {dailyApy}) => <span className={
@@ -145,6 +146,12 @@ const columns = [
     text: "APY",
     sort: true,
     formatter: apyFormatter
+  },
+  {
+    dataField: "monthlyApy",
+    text: "Monthly",
+    sort: true,
+    formatter: monthlyFormatter
   },
   {
     dataField: "dailyApy",
