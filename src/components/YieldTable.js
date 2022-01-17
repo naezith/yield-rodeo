@@ -120,7 +120,7 @@ pool.tradingApr ?
   </OverlayTrigger> : pool.assets.length === 1 ? '-' : "Unknown"
 
 const tvlFormatter = tvl => <span className={
-    numeral(tvl).value() > 1000000 ? 'text-success' : 
+    numeral(tvl).value() >= 1000000 ? 'text-success' : 
     numeral(tvl).value() < 100000 ? 'text-danger' : ''}>{formatFiat(tvl)}</span>
 
 const columns = [
