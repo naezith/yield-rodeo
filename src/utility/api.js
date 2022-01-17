@@ -67,6 +67,24 @@ const getPools = async (network, type) => {
     pool.network_id = network_info[network].id
     pool.key = network + '-' + pool.id
     pool.type = type // stake or pool
+    
+    // Fix withdrawalFee formatting, API bad formatting
+    if(pool.withdrawalFee && pool.withdrawalFee.length > 0) {
+      if(pool.withdrawalFee === "0.0%") {
+        pool.withdrawalFee = "0%"
+      }
+      if(pool.withdrawalFee[0] === '.') {
+        pool.withdrawalFee = "0" + pool.withdrawalFee
+      }
+    }
+
+    // Fix depositFee formatting, API bad formatting
+    if(pool.depositFee && pool.depositFee.length > 0) {
+      if(pool.depositFee[0] === '.') {
+        pool.depositFee = "0" + pool.depositFee
+      }
+      pool.depositFee = pool.depositFee.replace("<", "")
+    }
   }
 
   return jsonObj
@@ -106,8 +124,8 @@ export const getYieldsWithPrices = async () => {
     const apyBreakdown = apyBreakdowns[pool.id]
     return {
       vaultUrl: beefyUrl(pool.network, pool.id),  
-      depositFee: '0.0%',
       withdrawalFee: '0.1%',
+      depositFee: '0%',
       dailyApy: apyBreakdown && calcDaily(apyBreakdown.totalApy),
       ...pool,
       lpPrice: lpPrice,

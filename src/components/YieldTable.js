@@ -61,8 +61,12 @@ const apyFormatter = (totalApy, {totalApyAmount}) => formatApyAndAmount(totalApy
 const dailyFormatter = (dailyApy, {dailyApyAmount}) => formatApyAndAmount(dailyApy, dailyApyAmount)
 
 const withdrawalFeeFormatter = (withdrawalFee, {dailyApy}) => <span className={
-    numeral(withdrawalFee).value() === 0 ? 'text-success' :
-    numeral(withdrawalFee).value() > dailyApy ? 'text-danger' : ''}>{withdrawalFee}</span>
+    numeral(withdrawalFee).value() === 0 ? '' :
+    numeral(withdrawalFee).value() > dailyApy ? 'text-danger' : ''}>{(withdrawalFee === "0%" ? '-' : withdrawalFee)}</span>
+
+const depositFeeFormatter = (depositFee, {dailyApy}) => <span className={
+    numeral(depositFee).value() === 0 ? '' :
+    numeral(depositFee).value() > dailyApy ? 'text-danger' : ''}>{(depositFee === "0%" ? '-' : depositFee)}</span>
 
 const tradingFeesFormatter = (_, pool) =>
 pool.tradingApr ?
@@ -153,10 +157,16 @@ const columns = [
     formatter: withdrawalFeeFormatter
   },
   {
-    dataField: "tradingApr",
-    text: "Trading Fees",
-    formatter: tradingFeesFormatter
+    dataField: "depositFee",
+    text: "Deposit",
+    sort: true,
+    formatter: depositFeeFormatter
   },
+  // {
+  //   dataField: "tradingApr",
+  //   text: "Trading Fees",
+  //   formatter: tradingFeesFormatter
+  // },
   {
     dataField: "tvl",
     text: "TVL",
