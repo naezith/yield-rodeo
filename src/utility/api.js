@@ -1,6 +1,6 @@
 import {calcDaily} from './utils'
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
 const network_info = {
   'bsc': {
     id: 56,
@@ -41,6 +41,14 @@ const network_info = {
   'cronos': {
     id: 25,
     explorer: 'https://cronos.crypto.org/explorer/'
+  },
+  'fuse': {
+    id: 122,
+    explorer: 'https://explorer.fuse.io/'
+  },
+  'metis': {
+    id: 1088,
+    explorer: 'https://andromeda-explorer.metis.io/'
   },
 }
 
