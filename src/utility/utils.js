@@ -22,9 +22,9 @@ export const formatAny = (num, format) => {
   return text.indexOf('NaN') !== -1 ? '' : text
 }
 
-export const formatPercentage = (num) => formatAny(num, '0.00a%')
-export const formatInteger = (num) => formatAny(num, '0,0')
-export const formatFiat = (num) => formatAny(num, '$0,0.0a')
+export const formatPercentage = (num) => formatAny(num, '0.00a%').toUpperCase()
+export const formatInteger = (num) => formatAny(num, '0,0').toUpperCase()
+export const formatFiat = (num) => formatAny(num, '$0,0.0a').toUpperCase()
 
 export const filterPools = (pools, filters) => {
   const { desiredCoins, strictFilter, exactMatch, desiredPlatforms, desiredNetworks, includeSingleAssets, includeLPs } = filters
