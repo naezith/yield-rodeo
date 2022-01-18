@@ -1,5 +1,6 @@
 import {calcDaily, calcMonthly} from './utils'
 
+const fetchHeaders = {cache: "reload"}
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
 const network_info = {
   'bsc': {
@@ -57,7 +58,7 @@ const getPools = async (network, type) => {
       type === 'stake' ?
           `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/stake/${network}_stake.js` :
           `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/vault/${network}_pools.js`
-  )
+  , fetchHeaders)
 
   let text = await result.text()
   const beginningText = ' = ['
@@ -122,9 +123,9 @@ const fetchAllPools = async () => {
 
 export const getYieldsWithPrices = async () => {
   const yields = await fetchAllPools()
-  const prices = await (await fetch('https://api.beefy.finance/lps')).json()
-  const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown')).json()
-  const tvls = await (await fetch('https://api.beefy.finance/tvl')).json()
+  const prices = await (await fetch('https://api.beefy.finance/lps', fetchHeaders)).json()
+  const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown', fetchHeaders)).json()
+  const tvls = await (await fetch('https://api.beefy.finance/tvl', fetchHeaders)).json()
 
   return yields.map(pool => {
     const lpPrice = prices[pool.id]
