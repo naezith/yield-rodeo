@@ -1,6 +1,6 @@
 import {calcDaily, calcMonthly} from './utils'
 
-const fetchHeaders = {cache: "reload"}
+const fetchHeaders = {cache: "no-store"}
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
 const network_info = {
   'bsc': {
