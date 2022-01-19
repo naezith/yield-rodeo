@@ -38,8 +38,8 @@ const poolFormatter = (_, {logo, assets, name}) =>
     <span>{logo ?
             <Image src={poolLogoUrl(logo)} /> :
           assets.length === 1 ?
-            <Image src={coinLogoUrl(assets[0], 'svg')} onError={e => useFallbackImage(e, coinLogoUrl(assets[0], 'png'))} roundedCircle /> :
-              assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset, 'svg')} onError={e => useFallbackImage(e, coinLogoUrl(asset, 'png'))} roundedCircle />)
+            <Image src={coinLogoUrl(assets[0], 'png')} onError={e => useFallbackImage(e, coinLogoUrl(assets[0], 'svg'))} roundedCircle /> :
+              assets.map(asset => <Image className='stacked-logo' key={asset} src={coinLogoUrl(asset, 'png')} onError={e => useFallbackImage(e, coinLogoUrl(asset, 'svg'))} roundedCircle />)
         } {name}</span>
   </div>
 
