@@ -1,6 +1,19 @@
 import {calcDaily, calcMonthly} from './utils'
 import safetyScore from './safetyScore'
 
+const fetchPlus = (url, options = {}, retries = 50) =>
+  fetch(url, options)
+    .then(res => {
+      if (res.ok) {
+        return res
+      }
+      if (retries > 0) {
+        return fetchPlus(url, options, retries - 1)
+      }
+      throw new Error(res.status)
+    })
+    .catch(error => console.error(error.message))
+
 const getRandomParam = () => "?p=" + (new Date()).getTime()
 
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
@@ -135,9 +148,9 @@ const fetchAllPools = async () => {
 
 export const getYieldsWithPrices = async () => {
   const yields = await fetchAllPools()
-  const prices = await (await fetch('https://api.beefy.finance/lps' + getRandomParam())).json()
-  const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()
-  const tvls = await (await fetch('https://api.beefy.finance/tvl' + getRandomParam())).json()
+  const prices = await (await fetchPlus('https://api.beefy.finance/lps' + getRandomParam())).json()
+  const apyBreakdowns = await (await fetchPlus('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()
+  const tvls = await (await fetchPlus('https://api.beefy.finance/tvl' + getRandomParam())).json()
 
   return yields.map(pool => {
     const lpPrice = prices[pool.id]
@@ -160,18 +173,34 @@ export const getYieldsWithPrices = async () => {
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)
 }
 
+// Get coin logo formats
+let logosMap = JSON.parse(window.localStorage.getItem('logosMap'))
 
-let logosMap = {}
 const getLogos = async () => {
-  let saLogosFolder = await (await fetch('https://api.github.com/repos/beefyfinance/beefy-app/git/trees/531f92284548c728be80e9d917f86dd781b8aeb4')).json()
-  
-  if(!saLogosFolder || !saLogosFolder.tree) {
-    console.log("Notify the developer about this error: Beefy changed the logos folder, that needs to be updated")
-  }
+  if(!logosMap || logosMap.nextRefreshTime <= Date.now()) {
+    const githubRequestCount = 2
+    let canFetch = (await (await fetch('https://api.github.com/rate_limit')).json()).rate.remaining >= githubRequestCount 
+    if(canFetch) {
+      let lastCommitSha = (await (await fetch('https://api.github.com/repos/beefyfinance/beefy-app/commits/master')).json()).sha
+      let repoPaths = await (await fetch(`https://api.github.com/repos/beefyfinance/beefy-app/git/trees/${lastCommitSha}?recursive=1`)).json()
+      
+      for(let item of repoPaths.tree) {
+        if(item.path === 'src/images/single-assets') {
+          let saLogosFolder = await (await fetch(item.url)).json()
 
-  for(let item of saLogosFolder.tree) {
-    let coinName = item.path.split('.')[0]
-    logosMap[coinName] = item.path
+          for(let item of saLogosFolder.tree) {
+            let coinName = item.path.split('.')[0]
+            logosMap[coinName] = item.path
+          }
+
+          break
+        }
+      }
+
+      // Save
+      logosMap.nextRefreshTime = Date.now() + 15 * 60000
+      window.localStorage.setItem('logosMap', JSON.stringify(logosMap))
+    }
   }
 }
 getLogos()
