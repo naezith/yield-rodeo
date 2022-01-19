@@ -1,7 +1,7 @@
 import {calcDaily, calcMonthly} from './utils'
 import safetyScore from './safetyScore'
 
-const fetchPlus = (url, options = {}, retries = 50) =>
+const fetchPlus = (url, options = {}, retries = 150) =>
   fetch(url, options)
     .then(res => {
       if (res.ok) {
