@@ -1,3 +1,5 @@
+// https://github.com/beefyfinance/beefy-landing-v2/blob/main/src/helpers/safetyScore.js
+// https://github.com/beefyfinance/beefy-landing-v2/blob/main/src/config/risk.js
 export const MAX_SCORE = 10;
 
 export const RISKS = {
