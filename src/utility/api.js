@@ -168,7 +168,7 @@ const getLogos = async () => {
   if(!saLogosFolder || !saLogosFolder.tree) {
     console.log("Notify the developer about this error: Beefy changed the logos folder, that needs to be updated")
   }
-  
+
   for(let item of saLogosFolder.tree) {
     let coinName = item.path.split('.')[0]
     logosMap[coinName] = item.path
@@ -176,7 +176,6 @@ const getLogos = async () => {
 }
 getLogos()
 
-export const useFallbackImage = (ev, fallbackUrl) => { ev.target.src = fallbackUrl }
 export const coinLogoUrl = (ticker) => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/single-assets/'  + logosMap[ticker]
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
 export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
