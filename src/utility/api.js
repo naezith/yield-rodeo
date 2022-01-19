@@ -89,6 +89,16 @@ const getPools = async (network, type) => {
       }
     }
 
+
+    if(pool.assets) {
+      pool.assets = pool.assets.sort()
+      pool.name = ''
+      for(let a of pool.assets) {
+        if(pool.name !== '') pool.name += ' · '
+        pool.name += a
+      }
+    }
+
     // Fix depositFee formatting, API bad formatting
     if(pool.depositFee && pool.depositFee.length > 0) {
       if(pool.depositFee[0] === '.') {
