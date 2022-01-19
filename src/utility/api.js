@@ -178,6 +178,7 @@ let logosMap = JSON.parse(window.localStorage.getItem('logosMap'))
 
 const getLogos = async () => {
   if(!logosMap || logosMap.nextRefreshTime <= Date.now()) {
+    logosMap = {}
     const githubRequestCount = 2
     let canFetch = (await (await fetch('https://api.github.com/rate_limit')).json()).rate.remaining >= githubRequestCount 
     if(canFetch) {
