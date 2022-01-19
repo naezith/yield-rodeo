@@ -1,7 +1,8 @@
 import {calcDaily, calcMonthly} from './utils'
+import safetyScore from './safetyScore'
 
 const getRandomParam = () => "?p=" + (new Date()).getTime()
-const fetchHeaders = {cache: "no-store"}
+
 const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
 const network_info = {
   'bsc': {
@@ -59,7 +60,7 @@ const getPools = async (network, type) => {
       (type === 'stake' ?
           `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/stake/${network}_stake.js` :
           `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/vault/${network}_pools.js`)
-          + getRandomParam(), fetchHeaders)
+          + getRandomParam())
 
   let text = await result.text()
   const beginningText = ' = ['
@@ -77,7 +78,7 @@ const getPools = async (network, type) => {
     pool.network_id = network_info[network].id
     pool.key = network + '-' + pool.id
     pool.type = type // stake or pool
-    
+
     // Fix withdrawalFee formatting, API bad formatting
     if(pool.withdrawalFee && pool.withdrawalFee.length > 0) {
       if(pool.withdrawalFee === "0.0%") {
@@ -124,14 +125,15 @@ const fetchAllPools = async () => {
 
 export const getYieldsWithPrices = async () => {
   const yields = await fetchAllPools()
-  const prices = await (await fetch('https://api.beefy.finance/lps' + getRandomParam(), fetchHeaders)).json()
-  const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown' + getRandomParam(), fetchHeaders)).json()
-  const tvls = await (await fetch('https://api.beefy.finance/tvl' + getRandomParam(), fetchHeaders)).json()
+  const prices = await (await fetch('https://api.beefy.finance/lps' + getRandomParam())).json()
+  const apyBreakdowns = await (await fetch('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()
+  const tvls = await (await fetch('https://api.beefy.finance/tvl' + getRandomParam())).json()
 
   return yields.map(pool => {
     const lpPrice = prices[pool.id]
     const tvlToken = tvls[pool.network_id] ? tvls[pool.network_id][pool.id] : ''
     const apyBreakdown = apyBreakdowns[pool.id]
+    const score = safetyScore(pool.risks)
     return {
       vaultUrl: beefyUrl(pool.network, pool.id),  
       withdrawalFee: '0.1%',
@@ -141,7 +143,8 @@ export const getYieldsWithPrices = async () => {
       ...pool,
       lpPrice: lpPrice,
       tvl: tvlToken,
-      ...apyBreakdown
+      ...apyBreakdown,
+      safetyScore: score === null ? 1337 : score,
     }
   }).filter(pool => pool.tvl > 0 && pool.totalApy > 0.0001)
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)
