@@ -9,7 +9,7 @@ html, body, #root {
 
 .App {
   min-width: 960px;
-  max-width: 1300px;
+  max-width: 100%;
   text-align: center;
 }
 
