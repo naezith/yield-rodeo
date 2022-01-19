@@ -144,7 +144,7 @@ export const getYieldsWithPrices = async () => {
       lpPrice: lpPrice,
       tvl: tvlToken,
       ...apyBreakdown,
-      safetyScore: score === null ? 1337 : score,
+      safetyScore: score === null ? 9.991337 : score,
     }
   }).filter(pool => pool.tvl > 0 && pool.totalApy > 0.0001)
       .sort((a, b) => a.totalApy < b.totalApy ? 1 : -1)

@@ -70,9 +70,9 @@ const depositFeeFormatter = (depositFee, {dailyApy}) => <span className={
     numeral(depositFee).value() > dailyApy ? 'text-danger' : ''}>{(depositFee === "0%" ? '-' : depositFee)}</span>
 
 const safetyScoreFormatter = (safetyScore) => <span className={
-    numeral(safetyScore).value() === 1337 ? 'text-warning' : 
+    numeral(safetyScore).value() === 9.991337 ? 'text-warning' : 
     numeral(safetyScore).value() === 10 ? 'text-success' : 
-    numeral(safetyScore).value() <= 8 ? 'text-danger' : ''}>{(safetyScore === 1337 ? '?' : safetyScore === 10 ? '✓' : numeral(safetyScore).format("0.0"))}</span>
+    numeral(safetyScore).value() <= 8 ? 'text-danger' : ''}>{(safetyScore === 9.991337 ? '?' : safetyScore === 10 ? '✓' : numeral(safetyScore).format("0.0"))}</span>
 
 const tradingFeesFormatter = (_, pool) =>
 pool.tradingApr ?
