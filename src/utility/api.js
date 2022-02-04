@@ -16,7 +16,7 @@ const fetchPlus = (url, options = {}, retries = 150) =>
 
 const getRandomParam = () => "?p=" + (new Date()).getTime()
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis', 'aurora']
 const network_info = {
   'bsc': {
     id: 56,
@@ -65,6 +65,10 @@ const network_info = {
   'metis': {
     id: 1088,
     explorer: 'https://andromeda-explorer.metis.io/'
+  },
+  'aurora': {
+    id: 1313161554,
+    explorer: 'https://explorer.mainnet.aurora.dev/'
   },
 }
 
