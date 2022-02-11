@@ -189,6 +189,7 @@ const getLogos = async () => {
       let lastCommitSha = (await (await fetch('https://api.github.com/repos/beefyfinance/beefy-app/commits/master')).json()).sha
       let repoPaths = await (await fetch(`https://api.github.com/repos/beefyfinance/beefy-app/git/trees/${lastCommitSha}?recursive=1`)).json()
       
+      // Map paths to coins
       for(let item of repoPaths.tree) {
         if(item.path === 'src/images/single-assets') {
           let saLogosFolder = await (await fetch(item.url)).json()
