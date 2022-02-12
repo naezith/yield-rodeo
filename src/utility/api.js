@@ -16,7 +16,7 @@ const fetchPlus = (url, options = {}, retries = 150) =>
 
 const getRandomParam = () => "?p=" + (new Date()).getTime()
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis', 'aurora']
+const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis', 'aurora', 'moonbeam']
 const network_info = {
   'bsc': {
     id: 56,
@@ -69,6 +69,10 @@ const network_info = {
   'aurora': {
     id: 1313161554,
     explorer: 'https://explorer.mainnet.aurora.dev/'
+  },
+  'moonbeam': {
+    id: 1284,
+    explorer: 'https://moonscan.io/'
   },
 }
 
