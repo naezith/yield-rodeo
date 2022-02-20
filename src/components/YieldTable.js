@@ -4,14 +4,14 @@ import './YieldTable.scss'
 
 import BootstrapTable from 'react-bootstrap-table-next'
 
-import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
+// import Button from 'react-bootstrap/Button'
+// import Table from 'react-bootstrap/Table'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import {Image, OverlayTrigger, Popover} from 'react-bootstrap'
+import {Image/*, OverlayTrigger, Popover*/} from 'react-bootstrap'
 import {/*addressUrl, */coinLogoUrl, poolLogoUrl} from '../utility/api'
-import {formatFiat, formatInteger, formatPercentage} from '../utility/utils'
+import {formatFiat, /*formatInteger,*/ formatPercentage} from '../utility/utils'
 
 const expandRow = {
   renderer: pool => (
@@ -73,7 +73,7 @@ const safetyScoreFormatter = (safetyScore) => <span className={
     numeral(safetyScore).value() === 9.991337 ? 'text-warning' : 
     numeral(safetyScore).value() === 10 ? 'text-success' : 
     numeral(safetyScore).value() <= 8 ? 'text-danger' : ''}>{(safetyScore === 9.991337 ? '?' : safetyScore === 10 ? '✓' : numeral(safetyScore).format("0.0"))}</span>
-
+/*
 const tradingFeesFormatter = (_, pool) =>
 pool.tradingApr ?
   <OverlayTrigger
@@ -123,6 +123,7 @@ pool.tradingApr ?
   >
     <Button variant="success">Included</Button>
   </OverlayTrigger> : pool.assets.length === 1 ? '-' : "Unknown"
+*/
 
 const tvlFormatter = tvl => <span className={
     numeral(tvl).value() >= 1000000 ? 'text-success' : 
