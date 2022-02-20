@@ -1,5 +1,6 @@
 import {calcDaily, calcMonthly} from './utils'
 import safetyScore from './safetyScore'
+import { fixJSON } from './helpers'
 
 const fetchPlus = (url, options = {}, retries = 150) =>
   fetch(url, options)
@@ -16,64 +17,30 @@ const fetchPlus = (url, options = {}, retries = 150) =>
 
 const getRandomParam = () => "?p=" + (new Date()).getTime()
 
-const networks = ['avalanche', 'bsc', 'fantom', 'heco', 'polygon', 'arbitrum', 'harmony', 'celo', 'moonriver', 'cronos', 'fuse', 'metis', 'aurora', 'moonbeam']
-const network_info = {
-  'bsc': {
-    id: 56,
-    explorer: 'https://bscscan.com/'
-  },
-  'heco': {
-    id: 128,
-    explorer: 'https://hecoinfo.com/'
-  },
-  'polygon': {
-    id: 137,
-    explorer: 'https://polygonscan.com/'
-  },
-  'fantom': {
-    id: 250,
-    explorer: 'https://ftmscan.com/'
-  },
-  'avalanche': {
-    id: 43114,
-    explorer: 'https://cchain.explorer.avax.network/'
-  },
-  'arbitrum': {
-    id: 42161,
-    explorer: 'https://arbiscan.io/'
-  },
-  'harmony': {
-    id: 1666600000,
-    explorer: 'https://explorer.harmony.one/'
-  },
-  'celo': {
-    id: 42220,
-    explorer: 'https://explorer.celo.org/'
-  },
-  'moonriver': {
-    id: 1285,
-    explorer: 'https://blockscout.moonriver.moonbeam.network/'
-  },
-  'cronos': {
-    id: 25,
-    explorer: 'https://cronos.crypto.org/explorer/'
-  },
-  'fuse': {
-    id: 122,
-    explorer: 'https://explorer.fuse.io/'
-  },
-  'metis': {
-    id: 1088,
-    explorer: 'https://andromeda-explorer.metis.io/'
-  },
-  'aurora': {
-    id: 1313161554,
-    explorer: 'https://explorer.mainnet.aurora.dev/'
-  },
-  'moonbeam': {
-    id: 1284,
-    explorer: 'https://moonscan.io/'
-  },
+let networks = []
+let network_info = {}
+
+const getNetworks = async () => {
+  const result = await fetch(
+    `https://raw.githubusercontent.com/beefyfinance/beefy-api/master/packages/address-book/types/chainid.ts` + getRandomParam())
+
+  let text = await result.text()
+  text = text.substr(text.indexOf("{"), text.indexOf("}") + 1)
+        .replace(/ = /g, ': ')
+        .replace(',\n}','\n}')
+        .replace("avax", "avalanche") // Bad naming on Beefy API 
+        .replace("one", "harmony") // Bad naming on Beefy API 
+
+  const jsonObj = JSON.parse(fixJSON(text))
+
+  networks = []
+  network_info = {}
+  for (const [key, value] of Object.entries(jsonObj)) {
+    networks.push(key)
+    network_info[key] = { id: value }
+  }
+
+  return { networks, network_info }
 }
 
 const getPools = async (network, type) => {
@@ -155,6 +122,7 @@ const fetchAllPools = async () => {
 }
 
 export const getYieldsWithPrices = async () => {
+  await getNetworks()
   const yields = await fetchAllPools()
   const prices = await (await fetchPlus('https://api.beefy.finance/lps' + getRandomParam())).json()
   const apyBreakdowns = await (await fetchPlus('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()

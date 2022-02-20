@@ -39,3 +39,5 @@ export const arrayHasAllOfArray = (assets, desired, exact=false) => {
   }
   return true
 }
+
+export const fixJSON = badJSON => badJSON.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ')
