@@ -82,12 +82,12 @@ const processPools = pools => {
 export const getYieldsWithPrices = async () => {
   await getNetworks()
   const yields = processPools(await (await fetchPlus('https://api.beefy.finance/vaults' + getRandomParam())).json())
-  const prices = await (await fetchPlus('https://api.beefy.finance/lps' + getRandomParam())).json()
+  // const prices = await (await fetchPlus('https://api.beefy.finance/lps' + getRandomParam())).json()
   const apyBreakdowns = await (await fetchPlus('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()
   const tvls = await (await fetchPlus('https://api.beefy.finance/tvl' + getRandomParam())).json()
 
   return yields.map(pool => {
-    const lpPrice = prices[pool.id]
+    // const lpPrice = prices[pool.id]
     const tvlToken = tvls[pool.network_id] ? tvls[pool.network_id][pool.id] : ''
     const apyBreakdown = apyBreakdowns[pool.id]
     const score = safetyScore(pool.risks)
@@ -98,7 +98,7 @@ export const getYieldsWithPrices = async () => {
       dailyApy: apyBreakdown && calcDaily(apyBreakdown.totalApy),
       monthlyApy: apyBreakdown && calcMonthly(apyBreakdown.totalApy),
       ...pool,
-      lpPrice: lpPrice,
+      // lpPrice: lpPrice,
       tvl: tvlToken,
       ...apyBreakdown,
       safetyScore: score === null ? 9.991337 : score,
