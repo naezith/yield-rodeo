@@ -3,6 +3,10 @@ html, body, #root {
   font-family: "Helvetica";
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .full-height {
   height: 100%;
 }
