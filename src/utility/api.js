@@ -217,5 +217,5 @@ getLogos()
 
 export const coinLogoUrl = (ticker) => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/single-assets/'  + logosMap[ticker]
 export const poolLogoUrl = path => 'https://raw.githubusercontent.com/beefyfinance/beefy-app/master/src/images/'  + path
-export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
+// export const addressUrl = (network, address) => network_info[network].explorer + 'address/' + address
 export const beefyUrl = (network, id) => 'https://beta.beefy.finance/#/'+ network + '/vault/' + id
