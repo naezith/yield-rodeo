@@ -28,8 +28,6 @@ const getNetworks = async () => {
   text = text.substr(text.indexOf("{"), text.indexOf("}") + 1)
         .replace(/ = /g, ': ')
         .replace(',\n}','\n}')
-        .replace("avax", "avalanche") // Bad naming on Beefy API 
-        .replace("one", "harmony") // Bad naming on Beefy API 
 
   const jsonObj = JSON.parse(fixJSON(text))
 
@@ -43,29 +41,11 @@ const getNetworks = async () => {
   return { networks, network_info }
 }
 
-const getPools = async (network, type) => {
-  const result = await fetch(
-      (type === 'stake' ?
-          `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/stake/${network}_stake.js` :
-          `https://raw.githubusercontent.com/beefyfinance/beefy-app/prod/src/features/configure/vault/${network}_pools.js`)
-          + getRandomParam())
-
-  let text = await result.text()
-  const beginningText = ' = ['
-  const endingText = '];'
-  text = text.substr(text.indexOf(beginningText) + beginningText.length - 1,
-      text.indexOf(endingText) - endingText.length)
-      .replace(/earnContractAbi: govPoolABI,/g, '')
-      .replace(/, '4BELT'/g, '')
-      .replace(/partners: \[.*\]/g, 'partners: []')
-
-  const jsonObj = eval(text)
-
-  for(let pool of jsonObj) {
-    pool.network = network
-    pool.network_id = network_info[network].id
-    pool.key = network + '-' + pool.id
-    pool.type = type // stake or pool
+const processPools = pools => {
+  for(let pool of pools) {
+    pool.network = pool.chain
+    pool.network_id = network_info[pool.chain].id
+    pool.key = pool.network + '-' + pool.id
 
     // Fix withdrawalFee formatting, API bad formatting
     if(pool.withdrawalFee && pool.withdrawalFee.length > 0) {
@@ -96,34 +76,12 @@ const getPools = async (network, type) => {
     }
   }
 
-  return jsonObj
-}
-
-const fetchAllPools = async () => {
-  let pools = {
-    'stake': {},
-    'pool': {},
-  }
-
-  await Promise.all(Object.keys(pools).map(async type => {
-    await Promise.all(networks.map(async network => {
-      pools[type][network] = await getPools(network, type)
-    }))
-  }))
-
-
-  let allCombined = []
-
-  for(let type of Object.keys(pools))
-    for(let network of networks)
-      allCombined = allCombined.concat(pools[type][network])
-
-  return allCombined
+  return pools
 }
 
 export const getYieldsWithPrices = async () => {
   await getNetworks()
-  const yields = await fetchAllPools()
+  const yields = processPools(await (await fetchPlus('https://api.beefy.finance/vaults' + getRandomParam())).json())
   const prices = await (await fetchPlus('https://api.beefy.finance/lps' + getRandomParam())).json()
   const apyBreakdowns = await (await fetchPlus('https://api.beefy.finance/apy/breakdown' + getRandomParam())).json()
   const tvls = await (await fetchPlus('https://api.beefy.finance/tvl' + getRandomParam())).json()
