@@ -138,7 +138,7 @@ const columns = [
   },
 
   {
-    dataField: "platform",
+    dataField: "platformId",
     text: "Platform",
     sort: true
   },

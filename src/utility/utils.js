@@ -57,8 +57,7 @@ export const filterPools = (pools, filters) => {
 
     // Filter platforms
     if(desiredPlatformsArray.length > 0)
-      if(!textHasAnyOfArray(pool.platform.toUpperCase(), desiredPlatformsArray)) return false
-
+      if(!textHasAnyOfArray(pool.platformId.toUpperCase(), desiredPlatformsArray)) return false
     // Filter networks
     if(desiredNetworksArray.length > 0)
       if(!textHasAnyOfArray(pool.network.toUpperCase(), desiredNetworksArray)) return false
