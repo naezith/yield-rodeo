@@ -136,7 +136,7 @@ const Filters = ({ loading, poolCount }) => {
       <hr />
 
       <Form.Group>
-        <Form.Label>🌐 Minimum TVL</Form.Label>
+        <Form.Label>🏦 Minimum TVL</Form.Label>
         <Form.Control
           name="minimumTvl"
           value={minimumTvl}
