@@ -14,7 +14,7 @@ export const emptyFilters = {
 export const defaultFilters = {
   ...emptyFilters,
   desiredCoins: "usdc dai busd usdt",
-  minimumTvl: "900000",
+  minimumTvl: "100000",
 };
 
 const FiltersContext = createContext(defaultFilters);

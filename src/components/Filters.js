@@ -142,7 +142,7 @@ const Filters = ({ loading, poolCount }) => {
           value={minimumTvl}
           size="sm"
           type="number"
-          placeholder={900000}
+          placeholder={100000}
           onChange={handleChange}
         />
       </Form.Group>
