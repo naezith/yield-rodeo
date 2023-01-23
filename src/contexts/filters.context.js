@@ -1,20 +1,20 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
 export const emptyFilters = {
-  desiredCoins: '',
+  desiredCoins: "",
   strictFilter: true,
   exactMatch: false,
-  desiredPlatforms: '',
-  desiredNetworks: '',
+  desiredPlatforms: "",
+  desiredNetworks: "",
   includeSingleAssets: true,
-  includeLPs: true
-}
+  includeLPs: true,
+};
 
 export const defaultFilters = {
   ...emptyFilters,
-  desiredCoins: 'usdc dai busd usdt',
-}
+  desiredCoins: "usdc dai busd usdt",
+};
 
-const FiltersContext = createContext(defaultFilters)
+const FiltersContext = createContext(defaultFilters);
 
-export default FiltersContext
+export default FiltersContext;
