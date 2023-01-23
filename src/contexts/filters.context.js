@@ -6,6 +6,7 @@ export const emptyFilters = {
   exactMatch: false,
   desiredPlatforms: "",
   desiredNetworks: "",
+  minimumTvl: 0,
   includeSingleAssets: true,
   includeLPs: true,
 };
@@ -13,6 +14,7 @@ export const emptyFilters = {
 export const defaultFilters = {
   ...emptyFilters,
   desiredCoins: "usdc dai busd usdt",
+  minimumTvl: "900000",
 };
 
 const FiltersContext = createContext(defaultFilters);

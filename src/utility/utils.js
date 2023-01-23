@@ -36,6 +36,7 @@ export const filterPools = (pools, filters) => {
     exactMatch,
     desiredPlatforms,
     desiredNetworks,
+    minimumTvl,
     includeSingleAssets,
     includeLPs,
   } = filters;
@@ -81,6 +82,11 @@ export const filterPools = (pools, filters) => {
     if (desiredNetworksArray.length > 0)
       if (!textHasAnyOfArray(pool.network.toUpperCase(), desiredNetworksArray))
         return false;
+
+    // Filter TVL
+    if (numeral(pool.tvl).value() < numeral(minimumTvl).value()) {
+      return false;
+    }
 
     return true;
   });

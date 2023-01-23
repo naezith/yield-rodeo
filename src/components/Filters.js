@@ -32,6 +32,7 @@ const Filters = ({ loading, poolCount }) => {
     exactMatch,
     desiredPlatforms,
     desiredNetworks,
+    minimumTvl,
     includeSingleAssets,
     includeLPs,
   } = filters;
@@ -135,13 +136,13 @@ const Filters = ({ loading, poolCount }) => {
       <hr />
 
       <Form.Group>
-        <Form.Label>🌐 Networks to Ride</Form.Label>
+        <Form.Label>🌐 Minimum TVL</Form.Label>
         <Form.Control
-          name="desiredNetworks"
-          value={desiredNetworks}
+          name="minimumTvl"
+          value={minimumTvl}
           size="sm"
-          type="text"
-          placeholder="e.g. bsc polygon"
+          type="number"
+          placeholder={900000}
           onChange={handleChange}
         />
       </Form.Group>
