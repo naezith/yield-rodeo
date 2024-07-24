@@ -22,15 +22,16 @@ let network_info = {};
 
 const getNetworks = async () => {
   const result = await fetch(
-    `https://raw.githubusercontent.com/beefyfinance/beefy-api/master/packages/address-book/types/chainid.ts` +
+    `https://raw.githubusercontent.com/beefyfinance/beefy-api/master/packages/address-book/src/types/chainid.ts` +
       getRandomParam()
   );
 
   let text = await result.text();
-  text = text
-    .substr(text.indexOf("{"), text.indexOf("}") + 1)
-    .replace(/ = /g, ": ")
-    .replace(",\n}", "\n}");
+  let start = text.indexOf("{");
+  let end = text.indexOf("}", start) + 1;
+  text = text.substring(start, end)
+            .replace(/ = /g, ": ")
+            .replace(",\n}", "\n}");
 
   const jsonObj = JSON.parse(fixJSON(text));
 
